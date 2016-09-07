@@ -34,8 +34,8 @@ def calendar(request):
     :param request:
     :return:
     """
-    if not (request.user.is_staff or request.user.is_superuser):
-        raise Http404
+    #if not (request.user.is_staff or request.user.is_superuser):
+     #   raise Http404
 
     events = Event.objects.all()
 
