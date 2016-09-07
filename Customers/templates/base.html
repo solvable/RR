@@ -1,0 +1,106 @@
+<!--DOCTYPE html -->
+{% load static from staticfiles %}
+<html>
+    <head>
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+              integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <link rel="stylesheet" href='{% static "css/base.css" %}'/>
+
+
+        <title>{% block head_title %}RR Customer DB{% endblock head_title%}</title>
+        <!-- Load my Javascripts Confirm Delete popup -->
+        <script src='' {% static "js/confirm.js"%}'></script>
+
+            <!-- Load JQuery -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+              integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- Load Font Awesome -->
+        <script src="https://use.fontawesome.com/aa28806f89.js"></script>
+     {% block addhead %}
+     {% endblock addhead %}
+
+    </head>
+
+    <body>
+        <div>
+            {% if messages %}
+            <ul class="messages .alert-success">
+                {% for message in messages %}
+                <li
+                {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+            </ul>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div id="topNav" class="topNav">
+            <ul class="topNav col-md-12">
+                <li><a href="{% url 'customers:index' %}">Home</a></li>
+                <li><a href="/customers/search">Search</a></li>
+                <li><a href="{% url 'customers:list' %}">Recent</a></li>
+                <li><a href="{% url 'customers:calendar' %}">Calendar</a></li>
+                <li><a href="{% url 'customers:daily' %}">Daily</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+        {% block search %}
+
+        {% endblock search %}
+
+
+        </div>
+
+        <div id="sideNav" class="sideNav col-md-2">
+            <ul class="sidenav col-lg-2">
+                <li><a href="{% url 'customers:index' %}"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                <li><a href="/customers/search"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
+                <li><a href="{% url 'customers:create' %}"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
+                <li><a href="#"> <span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a></li>
+                <li><a href="#"> <span class="glyphicon glyphicon-cloud" aria-hidden="true"></span></a></li>
+            </ul>
+        </div>
+
+
+    <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+        <div id="main">
+            <div id="content-block" class="container">
+                {% block content %}
+                {% endblock content %}
+                {% block map %}
+                {% endblock map %}
+                {% block jobsite_content %}
+                {% endblock jobsite_content %}
+            </div>
+        </div>
+
+
+
+
+        </div>
+        <div id="right_pane">
+            {% block right_pane %}
+
+
+
+            {% endblock right_pane %}
+        </div>
+        <div id="footer">
+            <div id="footer-content-block" class="container">
+                {% block footer %}
+                {% endblock footer %}
+            </div>
+
+
+
+
+    </body>
+</html>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>

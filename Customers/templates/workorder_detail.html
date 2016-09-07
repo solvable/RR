@@ -1,0 +1,136 @@
+{% extends "customer_detail.html" %}
+{% block addhead %}
+
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+
+<style>
+
+
+
+
+
+</style>
+{% endblock addhead %}
+
+
+{% block workorder-content %}
+
+<div id='workorder_info_div' class='container col-xs-12 col-md-12'>
+    <h3>{{ workorder_title }}</h3>
+    {% for obj in queryset %}
+
+
+<table class="tg">
+  <tr>
+    <th class="tg-1rg7">Workorder #:</th>
+    <th class="tg-yw4l">{{obj.jobId}}</th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"></th>
+    <th class="tg-yw4l"><a href="{{ get_absolute_url }}workorder_update" type = button class="btn btn-primary">Edit</a></th>
+    <th class="tg-yw4l"><a href="{{ get_absolute_url }}workorder_delete" onclick="return confirm('Are you sure want to delete this Work Order?');" type="button" class="btn btn-danger">Delete</a></th>
+  </tr>
+  <tr>
+    <td class="tg-69zb">Created:</td>
+    <td class="tg-b44r">{{obj.created}}</td>
+    <td class="tg-b44r"></td>
+    <td class="tg-69zb">Modified:</td>
+    <td class="tg-b44r">{{obj.modified}}</td>
+    <td class="tg-b44r"></td>
+    <td class="tg-69zb">Modified By:</td>
+    <td class="tg-b44r">{{obj.modified_by}}</td>
+  </tr>
+  <tr>
+    <td class="tg-t04w">Job Address:</td>
+    <td class="tg-031e">{{obj.jobStreet}}<br>{{obj.jobCity}}, {{obj.jobState}}   {{obj.jobZip}}</td>
+    <td class="tg-031e"></td>
+    <td class="tg-t04w"></td>
+    <td class="tg-031e"></td>
+    <td class="tg-031e"></td>
+    <td class="tg-t04w">Complete:</td>
+    <td class="tg-031e">{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">
+            {%endif%}</td>
+  </tr>
+  <tr>
+    <td class="tg-m1nk">Problem:</td>
+    <td class="tg-fqpo">{{obj.problem}}</td>
+    <td class="tg-fqpo"></td>
+    <td class="tg-m1nk"></td>
+    <td class="tg-fqpo"></td>
+    <td class="tg-fqpo"></td>
+    <td class="tg-m1nk"></td>
+    <td class="tg-fqpo"></td>
+  </tr>
+  <tr>
+    <td class="tg-t04w">Access:</td>
+    <td class="tg-031e">{{obj.access}}</td>
+    <td class="tg-031e"></td>
+    <td class="tg-t04w">Stories:</td>
+    <td class="tg-031e">{{obj.stories}}</td>
+    <td class="tg-031e"></td>
+    <td class="tg-t04w"></td>
+    <td class="tg-031e"></td>
+  </tr>
+  <tr>
+    <td class="tg-m1nk">Notes:</td>
+    <td class="tg-fqpo" colspan="7" rowspan="2">{{obj.notes}}</td>
+  </tr>
+  <tr>
+    <td class="tg-m1nk"></td>
+  </tr>
+  <tr>
+    <td class="tg-t04w">Scheduled Date:</td>
+    <td class="tg-031e">{{obj.schedule_date}}</td>
+    <td class="tg-031e"></td>
+    <td class="tg-t04w">Assigned To:</td>
+    <td class="tg-031e">{{obj.assigned_to}}</td>
+    <td class="tg-031e"></td>
+    <td class="tg-t04w">Contract:</td>
+    <td class="tg-031e">{{obj.contract}}</td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+<script defer type="text/javascript">
+      var map;
+      var lati =parseFloat("{{obj.lat}}");
+      var long = parseFloat("{{obj.lng}}");
+
+      function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+            center:  {lat: lati, lng: long},
+            zoom: 20,
+            mapTypeId:'hybrid',
+            keyboardShortcuts:false,
+
+
+        });
+
+            var marker = new google.maps.Marker({
+
+            animation: google.maps.Animation.BOUNCE,
+            position: {lat: lati, lng: long},
+            map: map,
+            title: "{{obj.jobStreet}}"
+
+         });
+
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
+        }
+</script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYA6304AZ4M-qvzuIXVnEaRNYftGu_cDM&callback=initMap"></script>
+    {% endfor %}
+
+{% endblock workorder-content %}
+

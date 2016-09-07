@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block addhead %}
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#aaa;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 20px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aaa;color:#333;background-color:#fff;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 20px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aaa;color:#fff;background-color:#f38630;}
+.tg .tg-yw4l{vertical-align:top}
+</style>
+{% endblock addhead %}
+{{ block.super }}
+{% block content %}
+<table class="tg col-md-12">
+  <tr>
+
+</th>
+    <th class="tg-yw4l col-md-3"><h3>Evan</h3>
+</th>
+    <th class="tg-yw4l col-md-3"><h3>Chalie</h3>
+</th>
+    <th class="tg-yw4l col-md-3"><h3>John</h3>
+</th>
+    <th class="tg-yw4l col-md-3"><h3>Barry</h3></th>
+
+  </tr>
+  <tr>
+
+    <td class="tg-yw4l">
+{% for e in evan %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}</td>
+    <td class="tg-yw4l">{% for e in chalie %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}</td>
+    <td class="tg-yw4l">{% for e in john %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}</td>
+    <td class="tg-yw4l">{% for e in barry %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}</td>
+
+  </tr>
+  <tr>
+    <th class="tg-yw4l"><h3>Service</h3></th>
+    <th class="tg-yw4l"><h3>Jake</h3></th>
+    <th class="tg-yw4l"><h3>Corey</h3></th>
+    <th class="tg-yw4l"><h3>Chris</h3></th>
+
+  </tr>
+  <tr>
+    <td class="tg-yw4l">{% for e in serv %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}</td>
+    <td class="tg-yw4l">{% for e in jake %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}</td>
+    <td class="tg-yw4l">{% for e in corey %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}</td>
+    <td class="tg-yw4l">{% for e in chris %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}</td>
+
+  </tr>
+</table>
+
+
+<div class="col-md-6">
+<h3>Unassigned Jobs</h3></div>
+    {% for j in unassigned_jobs %}
+        {{ j.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}
+
+
+
+<div class="col-md-6">
+<h3>Unassigned Leads</h3></div>
+    {% for e in unassigned_estimates %}
+        {{ e.jobStreet }}<a href="{{ e.get_absolute_url }}workorder_detail/{{e.jobId}}" class="btn btn-info" id="btnViewWorkOrder" role="button">View</a>
+        </br>
+    {% endfor %}
+
+
+
+
+
+{% endblock content %}

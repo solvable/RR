@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block addhead %}
+{% load static %}
+
+<link rel='stylesheet' href='{% static "fullcalendar/fullcalendar.css" %}' />
+<script src='{% static "fullcalendar/lib/jquery.min.js" %}'></script>
+<script src='{% static "fullcalendar/lib/moment.min.js" %}'></script>
+<script src='{% static "fullcalendar/fullcalendar.js"%}'></script>
+
+
+
+{% endblock addhead %}
+
+
+
+{% block content %}
+<div id="calendar"></div>
+<script>
+$(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        weekends:false,
+        header:{
+            left:'title',
+            center:'agendaDay, agendaWeek',
+            right:'today,prev,next'
+
+        }
+        // put your options and callbacks here
+    })
+
+});
+</script>
+{% endblock content %}

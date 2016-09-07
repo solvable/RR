@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block addhead %}
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+
+{% endblock addhead %}
+
+{% block content %}
+{{ block.super }}
+<div class="container">
+
+<div id='customer_info_div' class='customer_info col-sm-10'>
+    <h2>Customer Info:</h2>
+        <table class="tg">
+          <tr>
+            <th class="tg-to66">Customer #</th>
+            <th class="tg-yw4l">{{instance.id}}</th>
+            <th class="tg-yw4l"></th>
+            <th class="tg-yw4l"></th>
+            <th class="tg-yw4l"></th>
+            <th class="tg-yw4l"></th>
+            <th class="tg-yw4l"><a href="{{ instance.get_absolute_url }}edit" class="btn btn-primary" role="button">Edit</a></th>
+            <th class="tg-yw4l"><a href="{{ instance.get_absolute_url }}delete"
+               onclick="return confirm('Are you sure want to delete this Customer?');"
+               class="btn btn-danger" role="button">Delete</a></th>
+          </tr>
+          <tr>
+            <td class="tg-9npg">Source:</td>
+            <td class="tg-b44r">{{instance.source}}</td>
+            <td class="tg-b44r"></td>
+            <td class="tg-9npg"></td>
+            <td class="tg-b44r"></td>
+            <td class="tg-b44r"></td>
+            <td class="tg-9npg">Created:</td>
+            <td class="tg-b44r">{{instance.created}}</td>
+          </tr>
+          <tr>
+            <td class="tg-8hy0">Customer Name:</td>
+            <td class="tg-yw4l">{{instance.fullName}}</td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l">Modified:</td>
+            <td class="tg-yw4l">{{instance.modified}}</td>
+          </tr>
+          <tr>
+            <td class="tg-h791">Billing Address:</td>
+            <td class="tg-fqpo" colspan="3">{{instance.billStreet}}<br>{{instance.billCity}}, {{instance.billState}},{{instance.billZip}}</td>
+            <td class="tg-fqpo"></td>
+            <td class="tg-fqpo"></td>
+            <td class="tg-h791">Modified_by</td>
+            <td class="tg-fqpo">{{instance.modified_by}}</td>
+          </tr>
+          <tr>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+            <td class="tg-yw4l"></td>
+          </tr>
+          <tr>
+            <td class="tg-h791">Phone 1:</td>
+            <td class="tg-fqpo">{{instance.phone1}}</td>
+            <td class="tg-fqpo"></td>
+            <td class="tg-m1nk"></td>
+            <td class="tg-fqpo"></td>
+            <td class="tg-fqpo"></td>
+            <td class="tg-m1nk"></td>
+            <td class="tg-fqpo"></td>
+          </tr>
+          <tr>
+            <td class="tg-c3s5">Phone 2:</td>
+            <td class="tg-031e">{{instance.phone2}}</td>
+            <td class="tg-031e"></td>
+            <td class="tg-c3s5"></td>
+            <td class="tg-031e"></td>
+            <td class="tg-031e"></td>
+            <td class="tg-t04w"></td>
+            <td class="tg-031e"></td>
+          </tr>
+          <tr>
+            <td class="tg-h791">Email:</td>
+            <td class="tg-fqpo">{{instance.email}}</td>
+            <td class="tg-fqpo"></td>
+            <td class="tg-m1nk"></td>
+            <td class="tg-fqpo"></td>
+            <td class="tg-fqpo"></td>
+            <td class="tg-m1nk"></td>
+            <td class="tg-fqpo"></td>
+          </tr>
+        </table>
+</div>
+
+
+    <div id="map"></div>
+    <div id="capture"></div>
+    <script async defer type="text/javascript">
+      var map;
+      var lati =parseFloat("{{instance.lat}}");
+      var long = parseFloat("{{instance.lng}}");
+
+      function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: lati, lng: long},
+            zoom: 19,
+            mapTypeId:'hybrid',
+            keyboardShortcuts:false,
+        });
+
+
+            var marker = new google.maps.Marker({
+            animation: google.maps.Animation.BOUNCE,
+            position: {lat: lati, lng: long},
+            map: map,
+            title: "{{instance.billStreet}}"
+         });
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYA6304AZ4M-qvzuIXVnEaRNYftGu_cDM&callback=initMap"></script>
+
+
+</div>
+
+
+{% block workorder-content %}
+
+<div id="workorder_list_div" class=container-fluid">
+    <h2>Work Orders:</h2>
+    <div id="btnCreate">
+        <a href="{{ get_absolute_url }}workorder_create" class="btn btn-success" role="button">New Work Order</a>
+    </div>
+    <div id="work_order_info_div">
+        {% for obj in workorder %}
+
+        <table class="tg">
+  <p><tr>
+    <th class="tg-031e">{{obj.jobStreet}}</th>
+    <th class="tg-031e">{{obj.jobCity}},</th>
+    <th class="tg-031e">{{obj.jobState}}</th>
+    <th class="tg-031e">{{obj.jobZip}}</th>
+    <th class="tg-031e">&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</th>
+    <th class="tg-031e">&nbsp;&nbsp;&nbsp;<a href="{{ get_absolute_url }}workorder_detail/{{obj.jobId}}" class="btn btn-info"
+                   role="button">View</a></th>
+
+  </tr>
+     </p>
+</table>
+
+
+        {% endfor %}
+    </div>
+    <div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if workorder.has_previous %}
+                    <a href="?{{ page_request_var }}={{ workorder.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ workorder.number }} of {{ workorder.paginator.num_pages }}.
+                </span>
+
+                {% if workorder.has_next %}
+                    <a href="?{{ page_request_var }}={{ workorder.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+
+{% endblock workorder-content %}
+{% endblock content %}
+
+
+
