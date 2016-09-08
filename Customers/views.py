@@ -14,6 +14,8 @@ from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from haystack.management.commands import update_index, rebuild_index
 from schedule.models import Event, Calendar
+import simplejson
+from django.core import serializers
 
 
 def search(request):
@@ -37,15 +39,22 @@ def calendar(request):
     #if not (request.user.is_staff or request.user.is_superuser):
      #   raise Http404
 
-    events = Event.objects.all()
+    scheduled = set()
+    workorders = WorkOrder.objects.all()
+    for workorder in workorders:
+        if workorder.schedule_date:
+            scheduled.add(workorder)
+
+    event_data = serializers.serialize("json", scheduled)
+
+
 
     context = {
         "title": "Calendar",
-        "events": events,
+        "event_data": event_data,
+        "workorder":workorder
     }
     return render(request, "calendar.html", context)
-
-
 
 
 def daily(request):

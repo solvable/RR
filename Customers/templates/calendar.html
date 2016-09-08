@@ -23,13 +23,24 @@ $(document).ready(function() {
 
     $('#calendar').fullCalendar({
         weekends:false,
+        defaultView:'agendaWeek',
+
         header:{
             left:'title',
-            center:'agendaDay, agendaWeek',
+            center:'month, agendaDay, agendaWeek',
             right:'today,prev,next'
+        },
 
-        }
-        // put your options and callbacks here
+        businessHours:{
+            dow: [1,2,3,4,5],
+            start:'6:00',
+            end:'17:00',
+        },
+
+        events:"{{ event_data }}"
+
+
+
     })
 
 });

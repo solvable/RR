@@ -156,6 +156,11 @@ class WorkOrder(models.Model):
         self.lat = lat
         self.lng = lng
         self.latlng = lat + "," + lng
+
+        # Add methods to create event when saving
+
+
+
         super(WorkOrder, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -172,4 +177,27 @@ class WorkOrder(models.Model):
 
 
 
+    class Events(models.Model):
+        workorder = models.ForeignKey("WorkOrder)
+        id = models.AutoField(primary_key=True)
+        title = models.CharField(max_length=100)
+        allDay = models.BooleanField(default=False)
+        start = models.DateTimeField()
+        end = models.DateTimeField()
+        url = models.CharField(max_length=100)
+        editable = models.BooleanField(default=False)
+        color = models.CharField(max_length=20, default="white")
+        backgroundColor = models.CharField(max_length=20, default = "white")
+        textColor = models.CharField(max_length=20, default="black")
+
+        def __unicode__(self):
+            return self.title
+
+        def __str__(self):
+            return self.title
+        def _delete__(self, instance):
+            return reverse("customers:calendar")
+
+        def get_absolute_url(self):
+            return reverse("workorder:detail", args=[str(self.workorder)])
 
