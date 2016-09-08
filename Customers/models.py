@@ -178,7 +178,7 @@ class WorkOrder(models.Model):
 
 
     class Events(models.Model):
-        workorder = models.ForeignKey("WorkOrder)
+        workorder = models.ForeignKey("WorkOrder")
         id = models.AutoField(primary_key=True)
         title = models.CharField(max_length=100)
         allDay = models.BooleanField(default=False)
