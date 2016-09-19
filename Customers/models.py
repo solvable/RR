@@ -3,7 +3,8 @@ from django.conf import settings
 from django.db import models
 import geocoder
 from django.core.urlresolvers import reverse
-
+from schedule.models import Event, EventRelation, Calendar
+from datetime import datetime, timedelta
 # Create your models here.
 # MVC
 
@@ -42,9 +43,9 @@ class Customer(models.Model):
     billCity = models.CharField(max_length=20)
     billState = models.CharField(max_length=2)
     billZip = models.CharField(max_length=5)
-    latlng = models.CharField(blank=True, max_length=100)
-    lat = models.FloatField(blank=True,max_length=100)
-    lng = models.FloatField(blank=True, max_length=100)
+    latlng = models.CharField(blank=True, max_length=100, default = '')
+    lat = models.FloatField(blank=True,max_length=100, default = '')
+    lng = models.FloatField(blank=True, max_length=100, default='')
     phone1 = models.CharField(max_length=20)
     phone2 = models.CharField(max_length=20, blank=True)
     email = models.EmailField(max_length=50, blank=True)
@@ -117,7 +118,6 @@ class WorkOrder(models.Model):
         (SUB, 'Sub'),
     )
 
-
     customer_id = models.ForeignKey(
         'Customer',
     )
@@ -134,6 +134,8 @@ class WorkOrder(models.Model):
     notes = models.CharField(max_length=150, blank=True)
     picture = models.ImageField(null=True,blank=True)
     schedule_date = models.DateField(null=True,blank=True)
+    schedule_time = models.TimeField(null=True, blank=True)
+    schedule_time_end = models.TimeField(null=True, blank=True)
     assigned_to = models.CharField(choices=LEAD_ASSIGNED_CHOICES,max_length=20, blank=True, default="")
     contract = models.FileField(upload_to=upload_location, blank=True)
     crew_assigned = models.CharField(choices=JOB_ASSIGNED_CHOICES ,max_length=50, blank=True, default="")
@@ -143,12 +145,13 @@ class WorkOrder(models.Model):
     latlng = models.CharField(blank=True, max_length=100, default="")
     lat = models.FloatField(blank=True, max_length=100, default=0)
     lng = models.FloatField(blank=True, max_length=100, default=0)
-
     class Meta:
         ordering = ["-created", "-modified"]
 
+
     # Geocode Full Address and Save
     def save(self, *args, **kwargs):
+        # Geolocate
         full_address = str(self.jobStreet + " " + self.jobCity + " " + self.jobState + " " + self.jobZip)
         g = geocoder.google(full_address)
         lat = str(g.json['lat'])
@@ -156,12 +159,31 @@ class WorkOrder(models.Model):
         self.lat = lat
         self.lng = lng
         self.latlng = lat + "," + lng
-
-        # Add methods to create event when saving
-
-
-
         super(WorkOrder, self).save(*args, **kwargs)
+
+        if self.schedule_date and self.schedule_time and self.schedule_time_end:
+            event = Event(start=self.schedule_date+self.schedule_time, end = self.schedule_time_end, title= self.jobStreet, description=self.problem)
+            event.save()
+            rel = EventRelation.objects.create_relation(event, self)
+            rel.save()
+            try:
+                cal = Calendar.objects.get(pk=1)
+            except Calendar.DoesNotExist:
+                cal = Calendar(name="Main Calendar")
+                cal.save()
+            cal.events.add(event)
+        else:
+            event = Event.objects.get_for_object(self)[0]
+            event.start = self.schedule_date
+            event.end = end
+            event.title = self.jobStreet
+            event.description = self.problem
+            event.save()
+
+
+
+
+
 
     def __unicode__(self):
         return self.jobStreet
@@ -177,27 +199,4 @@ class WorkOrder(models.Model):
 
 
 
-    class Events(models.Model):
-        workorder = models.ForeignKey("WorkOrder")
-        id = models.AutoField(primary_key=True)
-        title = models.CharField(max_length=100)
-        allDay = models.BooleanField(default=False)
-        start = models.DateTimeField()
-        end = models.DateTimeField()
-        url = models.CharField(max_length=100)
-        editable = models.BooleanField(default=False)
-        color = models.CharField(max_length=20, default="white")
-        backgroundColor = models.CharField(max_length=20, default = "white")
-        textColor = models.CharField(max_length=20, default="black")
-
-        def __unicode__(self):
-            return self.title
-
-        def __str__(self):
-            return self.title
-        def _delete__(self, instance):
-            return reverse("customers:calendar")
-
-        def get_absolute_url(self):
-            return reverse("workorder:detail", args=[str(self.workorder)])
 

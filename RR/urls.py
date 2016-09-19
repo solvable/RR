@@ -22,6 +22,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^customers/', include("Customers.urls",namespace='customers')),
+    url(r'^calendar/', include("schedule.urls", namespace='schedule')),
 
 ]
 

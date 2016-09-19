@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'haystack',
     'djangobower',
     'Customers',
-    
+    'schedule'
 
 ]
 

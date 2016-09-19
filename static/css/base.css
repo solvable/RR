@@ -123,6 +123,9 @@ h3{
 
 /* map */
 #map {
+    position:absolute;
+    top:0;
+    right:0;
     display: inline-block;
     width:380px;
     height:400px;
@@ -288,7 +291,7 @@ font-size:30px;
 
 /* calendar div */
 .fc-day fc-widget:hover{
-    background-color:red;
+    background-color: #ff0000;
 
 }
 

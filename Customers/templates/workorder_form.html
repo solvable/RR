@@ -3,7 +3,7 @@
 <h1>Work Order Form</h1>
 <form method="POST" action="" enctype="multipart/form">{% csrf_token %}
     <input type="hidden" name="customer_id" value="{{ customer_id }}">
-        {{ form.as_table }}
+        {{ form.as_p }}
     <input type="submit" value="Save Work Order">
 </form>
 {% endblock workorder-content %}

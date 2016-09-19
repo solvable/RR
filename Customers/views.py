@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from .models import Customer, WorkOrder
 from .forms import CustomerForm, WorkOrderForm
 from django import forms
+from schedule.models import Event, EventRelation, Calendar
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from haystack.management.commands import update_index, rebuild_index
 from schedule.models import Event, Calendar
@@ -36,23 +37,13 @@ def calendar(request):
     :param request:
     :return:
     """
-    #if not (request.user.is_staff or request.user.is_superuser):
-     #   raise Http404
-
-    scheduled = set()
-    workorders = WorkOrder.objects.all()
-    for workorder in workorders:
-        if workorder.schedule_date:
-            scheduled.add(workorder)
-
-    event_data = serializers.serialize("json", scheduled)
-
-
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http404
+    event_data = Event.objects.all()
 
     context = {
-        "title": "Calendar",
-        "event_data": event_data,
-        "workorder":workorder
+        "event_data":event,
+
     }
     return render(request, "calendar.html", context)
 
