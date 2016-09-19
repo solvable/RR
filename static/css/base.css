@@ -3,7 +3,7 @@ color:#777777;
 }
 
 .thumbnail div{
-    background-color:#CCFFFF;
+    background-color:#CCCFFF;
     text-align:center;
     width:250px;
 
@@ -19,6 +19,7 @@ h3{
 
 #btnViewCustomer{
     width:200px;
+    background-color:red;
 }
 
 /* topnav */
