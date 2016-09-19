@@ -31,23 +31,6 @@ def index(request):
     }
     return render(request, "index.html", context)
 
-def calendar(request):
-    """
-    View for Calendar powered by JQuery
-    :param request:
-    :return:
-    """
-    if not (request.user.is_staff or request.user.is_superuser):
-        raise Http404
-    event_data = Event.objects.all()
-
-    context = {
-        "event_data":event,
-
-    }
-    return render(request, "calendar.html", context)
-
-
 def daily(request):
     """
     View for todays scheduled objects sorted by Tech

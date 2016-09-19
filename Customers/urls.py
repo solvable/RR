@@ -15,7 +15,6 @@ from .views import (
     workorder_detail,
     workorder_delete,
     workorder_update,
-    calendar,
     daily,
 
 )
@@ -34,7 +33,6 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/workorder_detail/(?P<jobId>\d+)/$', workorder_detail, name='workorder_detail'),
     url(r'^(?P<id>\d+)/workorder_detail/(?P<jobId>\d+)/workorder_update/$', workorder_update, name='workorder_update'),
     url(r'^(?P<id>\d+)/workorder_detail/(?P<jobId>\d+)/workorder_delete/$', workorder_delete, name='workorder_delete'),
-    url(r'^calendar/', calendar, name='calendar'),
     url(r'^daily/$', daily, name='daily'),
 
 ]

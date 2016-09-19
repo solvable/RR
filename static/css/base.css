@@ -1,9 +1,3 @@
- html, body {
-        height: 100%;
-        margin-top: 50px;
-        padding: 0;
-      }
-
 h1 {
 color:#777777;
 }
@@ -31,25 +25,19 @@ h3{
 
 #topNav{
 
-
     color: white;
     background:#CCC;
 }
-
-
 
 .topNav ul{
     list-style-type:none;
     overflow:hidden;
     background-color:#333;
-
 }
 
 .topNav ul li{
     float:left;
-
 }
-
 
 .topNav ul li a{
     font-family:"Arial", Arial, Veranda;
@@ -61,7 +49,6 @@ h3{
     text-decoration: none;
 }
 
-
 .topNav li a:hover {
     background-color:#66ff66;
     color:black;
@@ -69,11 +56,9 @@ h3{
 }
 
 .topNav .active {
-    background-color:#009900;
-    color:white;
-
+    background-color: #009900;
+    color: white;
 }
-
 /*end topnav*/
 
 /* sidenav */
@@ -84,7 +69,7 @@ h3{
     color: white;
     background:#CCC;
     position:fixed;
-    width:100px;
+    width:75px;
     padding:10px 10px 10px 10px;
 }
 

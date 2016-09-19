@@ -36,6 +36,7 @@ class WorkOrderForm(forms.ModelForm):
             "problem",
             "notes",
             "schedule_date",
+            "schedule_time_end",
             "assigned_to",
             "crew_assigned",
             "contract",

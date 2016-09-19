@@ -4,9 +4,12 @@ from django.db import models
 import geocoder
 from django.core.urlresolvers import reverse
 from schedule.models import Event, EventRelation, Calendar
-from datetime import datetime, timedelta
+import datetime
+from datetime import timedelta
 # Create your models here.
 # MVC
+
+
 
 class Customer(models.Model):
     NOTAPP ='NA'
@@ -52,6 +55,7 @@ class Customer(models.Model):
     source = models.CharField(choices=SOURCE_CHOICES, max_length=20, default=NOTAPP)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
+
 
 
     # Geocode Full Address
@@ -149,6 +153,8 @@ class WorkOrder(models.Model):
         ordering = ["-created", "-modified"]
 
 
+
+
     # Geocode Full Address and Save
     def save(self, *args, **kwargs):
         # Geolocate
@@ -161,24 +167,8 @@ class WorkOrder(models.Model):
         self.latlng = lat + "," + lng
         super(WorkOrder, self).save(*args, **kwargs)
 
-        if self.schedule_date and self.schedule_time and self.schedule_time_end:
-            event = Event(start=self.schedule_date+self.schedule_time, end = self.schedule_time_end, title= self.jobStreet, description=self.problem)
-            event.save()
-            rel = EventRelation.objects.create_relation(event, self)
-            rel.save()
-            try:
-                cal = Calendar.objects.get(pk=1)
-            except Calendar.DoesNotExist:
-                cal = Calendar(name="Main Calendar")
-                cal.save()
-            cal.events.add(event)
-        else:
-            event = Event.objects.get_for_object(self)[0]
-            event.start = self.schedule_date
-            event.end = end
-            event.title = self.jobStreet
-            event.description = self.problem
-            event.save()
+
+
 
 
 
