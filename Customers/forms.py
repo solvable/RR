@@ -1,5 +1,5 @@
 from django import forms
-
+from django.forms import SelectDateWidget, Textarea, EmailInput, HiddenInput
 from .models import Customer, WorkOrder
 from haystack.forms import SearchForm
 
@@ -19,6 +19,7 @@ class CustomerForm(forms.ModelForm):
             "email",
             "source"
         ]
+        widgets = {'email':EmailInput}
 
 
 class WorkOrderForm(forms.ModelForm):
@@ -35,8 +36,6 @@ class WorkOrderForm(forms.ModelForm):
             "access",
             "problem",
             "notes",
-            "schedule_date",
-            "schedule_time_end",
             "assigned_to",
             "crew_assigned",
             "contract",
@@ -46,4 +45,7 @@ class WorkOrderForm(forms.ModelForm):
             "lng",
 
         ]
-
+        widgets = {'schedule_date': SelectDateWidget,
+                   'notes': Textarea,
+                   'customer_id': HiddenInput,
+                   }

@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 import geocoder
 from django.core.urlresolvers import reverse
+from .choices import *
 from schedule.models import Event, EventRelation, Calendar
 import datetime
 from datetime import timedelta
@@ -12,30 +13,6 @@ from datetime import timedelta
 
 
 class Customer(models.Model):
-    NOTAPP ='NA'
-    ANGIESLIST='AL'
-    CONTRACTOR = 'CO'
-    GOOGLE='GO'
-    OLDCUST= 'OC'
-    OTHER = 'OT'
-    RECCO = 'RC'
-    REALTOR = 'RE'
-    WEBSITE = 'WS'
-    YELP = 'YL'
-
-    SOURCE_CHOICES=(
-        (NOTAPP,'Not Applicable'),
-        (ANGIESLIST, 'Angie\'s List'),
-        (CONTRACTOR, 'Contractor'),
-        (GOOGLE,'Google'),
-        (OLDCUST,'Old Customer'),
-        (OTHER,'Other'),
-        (RECCO,'Recco'),
-        (REALTOR,'Realtor'),
-        (WEBSITE,'Website'),
-        (YELP,'Yelp'),
-    )
-
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     modified_by=models.CharField(max_length=50,default=1)
@@ -55,8 +32,6 @@ class Customer(models.Model):
     source = models.CharField(choices=SOURCE_CHOICES, max_length=20, default=NOTAPP)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
-
-
 
     # Geocode Full Address
     def save(self, *args, **kwargs):
@@ -91,37 +66,6 @@ def upload_location(instance, filename):
 
 class WorkOrder(models.Model):
 
-    EVAN = 'Evan'
-    CHALIE = 'Chalie'
-    JOHN = 'John'
-    BARRY = 'Barry'
-    SERVICE = 'Service'
-    JAKE = 'Jake'
-    COREY = 'Corey'
-    CHRIS = 'Chris'
-    SUB = 'Sub'
-
-
-    LEAD_ASSIGNED_CHOICES = (
-        (EVAN, 'Evan'),
-        (CHALIE, 'Chalie'),
-        (JOHN, 'John'),
-        (BARRY, 'Barry'),
-        (SERVICE, 'Service'),
-    )
-
-    JOB_ASSIGNED_CHOICES = (
-        (EVAN, 'Evan'),
-        (CHALIE, 'Chalie'),
-        (JOHN, 'John'),
-        (BARRY, 'Barry'),
-        (SERVICE, 'Service'),
-        (JAKE, 'Jake'),
-        (COREY, 'Corey'),
-        (CHRIS, 'Chris'),
-        (SUB, 'Sub'),
-    )
-
     customer_id = models.ForeignKey(
         'Customer',
     )
@@ -137,9 +81,7 @@ class WorkOrder(models.Model):
     problem = models.CharField(max_length=200)
     notes = models.CharField(max_length=150, blank=True)
     picture = models.ImageField(null=True,blank=True)
-    schedule_date = models.DateField(null=True,blank=True)
-    schedule_time = models.TimeField(null=True, blank=True)
-    schedule_time_end = models.TimeField(null=True, blank=True)
+
     assigned_to = models.CharField(choices=LEAD_ASSIGNED_CHOICES,max_length=20, blank=True, default="")
     contract = models.FileField(upload_to=upload_location, blank=True)
     crew_assigned = models.CharField(choices=JOB_ASSIGNED_CHOICES ,max_length=50, blank=True, default="")
@@ -168,13 +110,6 @@ class WorkOrder(models.Model):
         super(WorkOrder, self).save(*args, **kwargs)
 
 
-
-
-
-
-
-
-
     def __unicode__(self):
         return self.jobStreet
 
@@ -188,5 +123,11 @@ class WorkOrder(models.Model):
         return reverse("customers:detail", args=[str(self.customer_id)])
 
 
+class Appointment(models.Model):
 
+    workorder_id = models.ForeignKey(
+        'WorkOrder',
+    )
+    schedule_date = models.DateField(null=True, blank=True)
+    time_slot = models.CharField(choices=TIME_SLOTS, default='', max_length=20)
 
