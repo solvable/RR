@@ -293,3 +293,17 @@ font-size:30px;
 }
 
 /* end right_pane */
+
+/* weather info css */
+#weather{
+
+
+}
+
+#weather_icon{
+    height:250px;
+    margin-bottom: -80px;
+
+
+}
+/* end wether info */

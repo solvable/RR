@@ -5,27 +5,16 @@
 
 {% block content %}
 <div id="weather">
-{% for day in dailyData %}
-    {{today}}
-    {{day.summary}}</br>
-    {%endfor%}
-    </br>
 
+    <h3>
+            <img src="{{icon}}" id="weather_icon"><br>
+            Currently: {{status|capfirst}}<br>
+            Min/Max Temp:  {{temp_min}}/{{temp_max}}<br>
+            Wind Speed:{{wind_speed}}<br>
 
-{{icon}}
-</div>
-
-<div>
-    <h1>
-        <ul>
-         <li><a href="#">Gmail</a></li>
-            <li><a href="#">Pictometry</a></li>
-            <li><a href="#">GAF</a></li>
-
-        </ul>
-
-
-    </h1>
+            <!--5 day Forecast:
+            {{lst}}-->
+    </h3>
 </div>
 
 

@@ -23,73 +23,50 @@ def search(request):
     return HttpResponse(fuckoff)
 
 def index(request):
+    import pyowm
+    API_KEY = '0661037c3beedfccf03d405e5ed322e4'
+    LOCATION_ID = 5205788
+    owm=pyowm.OWM(API_KEY)
+
+
+    observation = owm.weather_at_id(LOCATION_ID)
+    w = observation.get_weather()
+
+    status = w.get_detailed_status()
+    weather_icon = w.get_weather_icon_name()
+    icon = "http://openweathermap.org/img/w/"+weather_icon+".png"
+
+    temp = w.get_temperature('fahrenheit')
+    temp_max = temp["temp_max"]
+    temp_min = temp["temp_min"]
+
+    wind = w.get_wind()
+    wind_speed = wind["speed"]
+
+    fc = owm.daily_forecast_at_id(LOCATION_ID, limit=5)
+    f = fc.get_forecast()
+    lst = f.get_weathers()
+
+
+
+
+
+
 
     context = {
         "title":"Home",
-
+        "status": status,
+        "icon":icon,
+        "wind_speed":wind_speed,
+        "temp_max":temp_max,
+        "temp_min":temp_min,
+        "f":f,
+        "lst":lst,
 
     }
     return render(request, "index.html", context)
 
-def daily(request):
-    """
-    View for todays scheduled objects sorted by Tech
-    :param request:
-    :return:
-    """
-    if not (request.user.is_staff or request.user.is_superuser):
-        raise Http404
 
-    today=datetime.date.today()
-    chalie = set()
-    john = set()
-    evan = set()
-    barry = set()
-    serv = set()
-    jake = set()
-    corey = set()
-    chris = set()
-    unassigned_jobs = set()
-    unassigned_estimates=set()
-
-    for workorder in WorkOrder.objects.filter(schedule_date=today):
-
-            if workorder.assigned_to == "Evan" or workorder.crew_assigned == "Evan":
-                evan.add(workorder)
-            elif workorder.assigned_to == "John" or workorder.crew_assigned == "John":
-                john.add(workorder)
-            elif workorder.assigned_to == "Chalie" or workorder.crew_assigned == "Chalie":
-                chalie.add(workorder)
-            elif workorder.assigned_to == "Barry" or workorder.crew_assigned == "Barry":
-                barry.add(workorder)
-            elif workorder.assigned_to == "Service" or workorder.crew_assigned == "Service":
-                serv.add(workorder)
-            elif workorder.crew_assigned == "Jake":
-                jake.add(workorder)
-            elif workorder.crew_assigned == "Corey":
-                corey.add(workorder)
-            elif workorder.crew_assigned == "Chris":
-                chris.add(workorder)
-
-
-
-
-
-    context = {
-        "title": "Today's Daily Sheet",
-        "unassigned_jobs":unassigned_jobs,
-        "unassigned_estimates":unassigned_estimates,
-        "chalie":chalie,
-        "evan":evan,
-        "john":john,
-        "barry":barry,
-        "serv":serv,
-        "corey":corey,
-        "chris":chris,
-        "jake":jake,
-
-    }
-    return render(request, "daily.html", context)
 
 
 def customer_list(request):
