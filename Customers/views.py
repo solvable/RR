@@ -47,12 +47,6 @@ def index(request):
     f = fc.get_forecast()
     lst = f.get_weathers()
 
-
-
-
-
-
-
     context = {
         "title":"Home",
         "status": status,

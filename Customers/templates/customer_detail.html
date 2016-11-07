@@ -11,88 +11,59 @@
 
 <div id='customer_info_div' class='customer_info col-sm-10'>
     <h2>Customer Info:</h2>
-        <table class="tg">
-          <tr>
-            <th class="tg-to66">Customer #</th>
-            <th class="tg-yw4l">{{instance.id}}</th>
-            <th class="tg-yw4l"></th>
-            <th class="tg-yw4l"></th>
-            <th class="tg-yw4l"></th>
-            <th class="tg-yw4l"></th>
-            <th class="tg-yw4l"><a href="{{ instance.get_absolute_url }}edit" class="btn btn-primary" role="button">Edit</a></th>
-            <th class="tg-yw4l"><a href="{{ instance.get_absolute_url }}delete"
+
+
+            <a href="{{ instance.get_absolute_url }}edit" class="btn btn-primary" role="button">Edit</a>
+            <a href="{{ instance.get_absolute_url }}delete"
                onclick="return confirm('Are you sure want to delete this Customer?');"
-               class="btn btn-danger" role="button">Delete</a></th>
-          </tr>
-          <tr>
-            <td class="tg-9npg">Source:</td>
-            <td class="tg-b44r">{{instance.source}}</td>
-            <td class="tg-b44r"></td>
-            <td class="tg-9npg"></td>
-            <td class="tg-b44r"></td>
-            <td class="tg-b44r"></td>
-            <td class="tg-9npg">Created:</td>
-            <td class="tg-b44r">{{instance.created}}</td>
-          </tr>
-          <tr>
-            <td class="tg-8hy0">Customer Name:</td>
-            <td class="tg-yw4l">{{instance.fullName}}</td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l">Modified:</td>
-            <td class="tg-yw4l">{{instance.modified}}</td>
-          </tr>
-          <tr>
-            <td class="tg-h791">Billing Address:</td>
-            <td class="tg-fqpo" colspan="3">{{instance.billStreet}}<br>{{instance.billCity}}, {{instance.billState}},{{instance.billZip}}</td>
-            <td class="tg-fqpo"></td>
-            <td class="tg-fqpo"></td>
-            <td class="tg-h791">Modified_by</td>
-            <td class="tg-fqpo">{{instance.modified_by}}</td>
-          </tr>
-          <tr>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-            <td class="tg-yw4l"></td>
-          </tr>
-          <tr>
-            <td class="tg-h791">Phone 1:</td>
-            <td class="tg-fqpo">{{instance.phone1}}</td>
-            <td class="tg-fqpo"></td>
-            <td class="tg-m1nk"></td>
-            <td class="tg-fqpo"></td>
-            <td class="tg-fqpo"></td>
-            <td class="tg-m1nk"></td>
-            <td class="tg-fqpo"></td>
-          </tr>
-          <tr>
-            <td class="tg-c3s5">Phone 2:</td>
-            <td class="tg-031e">{{instance.phone2}}</td>
-            <td class="tg-031e"></td>
-            <td class="tg-c3s5"></td>
-            <td class="tg-031e"></td>
-            <td class="tg-031e"></td>
-            <td class="tg-t04w"></td>
-            <td class="tg-031e"></td>
-          </tr>
-          <tr>
-            <td class="tg-h791">Email:</td>
-            <td class="tg-fqpo">{{instance.email}}</td>
-            <td class="tg-fqpo"></td>
-            <td class="tg-m1nk"></td>
-            <td class="tg-fqpo"></td>
-            <td class="tg-fqpo"></td>
-            <td class="tg-m1nk"></td>
-            <td class="tg-fqpo"></td>
-          </tr>
-        </table>
+               class="btn btn-danger" role="button">Delete</a></br>
+    <table class="metadata_table">
+      <tr>
+        <td>Customer Id:</td>
+        <td>{{instance.id}}</td>
+        <td>Source:</td>
+          <td>{{instance.source}}</td>
+      </tr>
+      <tr>
+        <td>Created:</td>
+          <td>{{instance.created}}</td>
+        <td>Modified:</td>
+          <td>{{instance.modified}}</br></td>
+      </tr>
+      <tr>
+          <td></td>
+        <td></td>
+        <td> Modified by:</td>
+          <td>{{instance.modified_by}}</td>
+      </tr>
+
+
+        <tr>
+            <td>Customer Name:</td>
+            <td>{{instance.fullName}}</td>
+            <td>Phone 1:</td>
+            <td>{{instance.phone1}}</td>
+        </tr>
+        <tr>
+            <td >Billing Address:</td>
+            <td rowspan="2">{{instance.billStreet}}<br>{{instance.billCity}}, {{instance.billState}},{{instance.billZip}}</td>
+            <td>Phone 2:</td>
+            <td>{{instance.phone2}}</td>
+        </tr>
+        <tr>
+            <td></td>
+
+            <td>Email:</td>
+            <td>{{instance.email}}</td>
+        </tr>
+
+
+
+
+    </table>
+
+
+
 </div>
 
 
@@ -133,7 +104,7 @@
 
 {% block workorder-content %}
 
-<div id="workorder_list_div" class=container-fluid">
+<div id="workorder_list_div" class="container-fluid">
     <h2>Work Orders:</h2>
     <div id="btnCreate">
         <a href="{{ get_absolute_url }}workorder_create" class="btn btn-success" role="button">New Work Order</a>

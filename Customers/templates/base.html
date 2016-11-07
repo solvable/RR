@@ -37,22 +37,8 @@
             {% endfor %}
             {% endif %}
         </div>
-        <div id="topNav" class="topNav">
-            <ul class="topNav col-md-12">
-                <li><a href="{% url 'customers:index' %}">Home</a></li>
-                <li><a href="/customers/search">Search</a></li>
-                <li><a href="{% url 'customers:list' %}">Recent</a></li>
-                <li><a href="#">Logout</a></li>
-            </ul>
-        </div>
-        {% block search %}
 
-        {% endblock search %}
-
-
-        </div>
-
-        <div id="sideNav" class="sideNav col-md-2">
+                <div id="sideNav" class="sideNav col-md-2">
             <ul class="sidenav col-lg-2">
                 <li><a href="{% url 'customers:index' %}"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
                 <li><a href="/customers/search"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
@@ -63,15 +49,52 @@
         </div>
 
 
+        <div id="topNav" class="topNav">
+            <ul class="topNav col-md-12">
+                <li><a href="{% url 'customers:index' %}">Home</a></li>
+                <li><a href="/customers/search">Search</a></li>
+                <li><a href="{% url 'customers:list' %}">Recent</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+
+
+        </div>
+
+
+
+
     <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
         <div id="main">
-            <div id="content-block" class="container">
+
+            <div id="search-content-block" class="container">
+
+                 {% block search %}
+                 {% endblock search %}
+
+            </div>
+
+
+
+            <div id="first-content-block" class="container">
+
                 {% block content %}
                 {% endblock content %}
-                {% block map %}
-                {% endblock map %}
+
+            </div>
+
+            <div id = "second-content-block" class="container">
+
                 {% block jobsite_content %}
                 {% endblock jobsite_content %}
+
+            </div>
+
+            <div id="map-block">
+
+                {% block map %}
+                {% endblock map %}
+
             </div>
         </div>
 

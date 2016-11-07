@@ -1,18 +1,33 @@
-h1 {
-color:#777777;
+#main{
+    margin-left:5%;
+
 }
 
-.thumbnail div{
-    background-color:#CCCFFF;
-    text-align:center;
-    width:250px;
-
+h1 {
+color:#777777;
 }
 
 h3{
     style:italic;
 }
 
+/* customer list*/
+.thumbnail div{
+    background-color:#e6e6e6;
+    text-align:center;
+    width:250px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+
+}
+.customer-list-object{
+    draggable: true;
+
+}
+
+
+/* end customer list*/
 #btnbox{
     display:inline-block;
    }
@@ -107,6 +122,52 @@ h3{
 
 /* end sidenav */
 
+/* tables */
+
+table{
+    border:1px solid transparent;
+
+}
+
+tr{
+
+    vertical-align: top;
+
+}
+
+th, td{
+
+    text-align: left;
+    width:5%;
+    padding:10px;
+}
+
+td:hover{
+    background-color:black;
+    color:white;
+
+}
+
+
+/* end tables */
+
+/* first-content-block */
+#first-content-block{
+    float:left;
+    width:50%;
+}
+/* end first-content block */
+
+/* second-content-block */
+#second-content-block{
+    float:right;
+    width:50%;
+
+}
+
+
+/* end second-content block */
+
 /* map */
 #map {
     position:absolute;
@@ -120,132 +181,9 @@ h3{
     border:solid black 2px;
     clear:none;
 
-
-
-
 }
 /* end map */
 
-
-/* customer */
-#customer_info_div {
-
-    font-size:20px;
-
-    margin-left:-200px;
-
-    float: left;
-
-
-}
-
-#customer_info_div .tg  {border-collapse:collapse;border-spacing:0;border-width:1px;border-style:solid;}
-#customer_info_div .tg td{font-family:Arial, sans-serif;font-size:14px;padding:3px 20px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
-#customer_info_div .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:3px 20px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
-#customer_info_div .tg .tg-0jv3{background-color:#ecf4ff;color:#3531ff}
-#customer_info_div .tg .tg-5y5n{background-color:#ecf4ff}
-#customer_info_div .tg .tg-5e9m{font-weight:bold;font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif !important;;background-color:#ecf4ff;color:#3531ff}
-#customer_info_div .tg .tg-lllf{font-weight:bold;font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif !important;;background-color:#ecf4ff;color:#3531ff;vertical-align:top}
-#customer_info_div .tg .tg-c57o{background-color:#ecf4ff;vertical-align:top}
-#customer_info_div .tg .tg-p3fd{font-weight:bold;background-color:#ecf4ff;color:#3531ff;vertical-align:top}
-
-label[for=id_phone2]{
-    color:red;
-}
-
-label[for=id_email]{
-    color:red;
-}
-label[for=id_source]{
-    color:red;
-}
-label[for=id_phone2]{
-    color:red;
-}
-
-
-
-/* end customer */
-
-/* workorder */
-
-#workorder_list_div{
-
-
-
-
-    float: left;
-    margin-bottom:100px;
-
-}
-
-#workorder_list_div h2{
-    color:Black;
-    display:inline-block;
-    }
-
-#workorder_list_div btn{
-    display:inline-block;
-    }
-
-#workorder_info_div {
-    display:inline-block;
-    margin-left:-200px;
-}
-
-label[for=id_schedule_date]{
-    color:red;
-}
-
-label[for=id_assigned_to]{
-    color:red;
-}
-
-label[for=id_contract]{
-    color:red;
-}
-label[for=id_completed]{
-    color:red;
-}
-label[for=id_notes]{
-    color:red;
-}
-.glyphicon-ok{
-    color:red;
-}
-
-/* workorder table */
-
-#workorder_info_div .tg  {border-collapse:collapse;border-spacing:0;border-width:1px;border-style:solid;}
-#workorder_info_div .tg td{font-family:Arial, sans-serif;font-size:14px;padding:3px 20px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
-#workorder_info_div .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:3px 20px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
-#workorder_info_div .tg .tg-b44r{background-color:#cbcefb;vertical-align:top}
-#workorder_info_div .tg .tg-69zb{background-color:#cbcefb;color:#3531ff;vertical-align:top}
-#workorder_info_div .tg .tg-1rg7{color:#3531ff;vertical-align:top}
-#workorder_info_div .tg .tg-fqpo{background-color:#cbcefb}
-#workorder_info_div .tg .tg-t04w{color:#3531ff}
-#workorder_info_div .tg .tg-yw4l{vertical-align:top}
-#workorder_info_div .tg .tg-m1nk{background-color:#cbcefb;color:#3531ff}
-
-
-/* end workorder */
-
-/* search */
-#search_div{
-    float:left;
-    margin-left:250px;;
-}
-
-/* eliminates the label on the search page to check off searching models */
-#id_models{
-visibility:hidden;
-}
-#searchForm p:nth-child(2) label {
-visibility:hidden;}
-
-
-
-/* end search */
 
 /* pagination */
 // change the day's background color just for fun
@@ -253,57 +191,14 @@ visibility:hidden;}
     float:left;
     clear:both;
 }
-
 .current{
     font-size:30px;
-
 }
-
-
 .glyphicon-step-forward{
 font-size:30px;
-
 }
-
 .glyphicon-step-backward{
 font-size:30px;
-
 }
-
-
-/* pagination */
 /* end pagination */
 
-
-/* calendar div */
-.fc-day fc-widget:hover{
-    background-color: #ff0000;
-
-}
-
-
-
-/* end calendar */
-
-/* right_pane*/
-#right_pane{
-    float:right;
-
-
-}
-
-/* end right_pane */
-
-/* weather info css */
-#weather{
-
-
-}
-
-#weather_icon{
-    height:250px;
-    margin-bottom: -80px;
-
-
-}
-/* end wether info */
