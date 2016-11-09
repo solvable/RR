@@ -21,12 +21,16 @@ $(document).ready(function() {
     // page is now ready, initialize the calendar...
     $('#calendar').fullCalendar({
         weekends:false,
-        defaultView:'agendaWeek',
+        defaultView:'month',
+        nowIndicator:true,
+        navLinks: true,
+
         header:{
             left:'title',
-            center:'month, agendaDay, agendaWeek',
+            center:'month, agendaWeek, agendaDay',
             right:'today,prev,next'
         },
+
         businessHours:{
             dow: [1,2,3,4,5],
             start:'6:00',
