@@ -55,7 +55,10 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
+
 
 HAYSTACK_CONNECTIONS= {
     'default':{
@@ -148,6 +151,7 @@ BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR,'components')
 BOWER_INSTALLED_APPS = (
     'jquery',
     'bootstrap',
+    'fullcalendar',
 
 )
 STATIC_ROOT= os.path.join(BASE_DIR,"static_customers")

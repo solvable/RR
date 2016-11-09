@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 
 from .views import (
     index,
-    customer_list,
+    customer_browse,
     customer_create,
     customer_detail,
     customer_update,
@@ -15,7 +15,9 @@ from .views import (
     workorder_detail,
     workorder_delete,
     workorder_update,
-
+    recents,
+    calendar,
+    open_workorders,
 
 )
 
@@ -24,8 +26,11 @@ from .views import (
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^search/', include('haystack.urls'), name='search'),
-    url(r'^customer_list/$', customer_list, name='list'),
+    url(r'^customer_browse/$', customer_browse, name='browse'),
+    url(r'^recents/$', recents, name='recents'),
+    url(r'^calendar/$', calendar, name='calendar'),
     url(r'^create/$', customer_create, name='create'),
+    url(r'^open_workorders/$', open_workorders, name='open_workorders'),
     url(r'^(?P<id>\d+)/$', customer_detail, name='detail'),
     url(r'^(?P<id>\d+)/edit/$', customer_update, name='update'),
     url(r'^(?P<id>\d+)/delete/$', customer_delete),

@@ -60,17 +60,35 @@ def index(request):
     }
     return render(request, "index.html", context)
 
+def calendar(request):
+    import calendar
+    d = datetime.datetime.today()
+    day = d.day
+    month =d.month
+    year =d.year
+    c=calendar.HTMLCalendar(firstweekday=0)
+    a = str(c.formatmonth(year,month))
 
 
+    context = {
+        "calendar":a,
+    }
 
-def customer_list(request):
+    return render(request, "calendar.html", context)
+
+
+def recents(request):
     """
     View for customer list
     :param request:
     :return: list of all customer objects rendered on 'customer_list.html'
     """
-    queryset_list = Customer.objects.all()
-    paginator = Paginator(queryset_list, 2) # show 15 customers per page
+
+    yesterday = datetime.datetime.today()-datetime.timedelta(days=1)
+
+    queryset_list = Customer.objects.all().filter(created__gt=yesterday)
+
+    paginator = Paginator(queryset_list, 25) # show 25 customers per page
     page_request_var = "page"
     page = request.GET.get(page_request_var)
 
@@ -91,6 +109,62 @@ def customer_list(request):
         }
     return render(request, "customer_list.html", context)
 
+
+def customer_browse(request):
+    """
+    View for customer list
+    :param request:
+    :return: list of all customer objects rendered on 'customer_list.html'
+    """
+    queryset_list = Customer.objects.all().order_by('lastName', 'firstName')
+    paginator = Paginator(queryset_list, 25) # show 25 customers per page
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        #If page is not an integer deliver first page
+        queryset = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        queryset = paginator.page(paginator.num_pages)
+
+    # Set context variables
+    context = {
+            "title":"Recent Customers",
+            "object_list": queryset,
+            "page_request_var":page_request_var,
+        }
+    return render(request, "customer_list.html", context)
+
+
+def open_workorders(request):
+
+    queryset_list = WorkOrder.objects.all().filter(completed=False).order_by('created')
+    customers = Customer.objects.all()
+    paginator = Paginator(queryset_list, 25) # show 25 customers per page
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        #If page is not an integer deliver first page
+        queryset = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        queryset = paginator.page(paginator.num_pages)
+
+
+    # Set context variables
+    context = {
+        "title": "Open Workrders",
+        "object_list": queryset,
+        "customers":customers,
+        "page_request_var": page_request_var,
+    }
+    return render(request, "open_workorders.html", context)
 
 def customer_create(request):
     '''

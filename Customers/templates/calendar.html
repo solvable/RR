@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 
 {% block addhead %}
-{% load static %}
 
+{% load static %}
 <link rel='stylesheet' href='{% static "fullcalendar/fullcalendar.css" %}' />
 <script src='{% static "fullcalendar/lib/jquery.min.js" %}'></script>
 <script src='{% static "fullcalendar/lib/moment.min.js" %}'></script>
 <script src='{% static "fullcalendar/fullcalendar.js"%}'></script>
-
-
 
 {% endblock addhead %}
 
@@ -20,33 +18,26 @@
 <div id="calendar"></div>
 <script>
 $(document).ready(function() {
-
     // page is now ready, initialize the calendar...
-
     $('#calendar').fullCalendar({
-
-
-
-
         weekends:false,
-        defaultView:'month',
-
+        defaultView:'agendaWeek',
         header:{
             left:'title',
             center:'month, agendaDay, agendaWeek',
             right:'today,prev,next'
         },
-
         businessHours:{
             dow: [1,2,3,4,5],
             start:'6:00',
             end:'17:00',
         },
-
-
-
+        events:"{{ event_data }}"
     })
-
 });
+
 </script>
+<!--{{calendar|safe}}-->
+
+
 {% endblock content %}

@@ -135,14 +135,14 @@ tr{
 
 }
 
-th, td{
+.td-worktable tr, td{
 
     text-align: left;
     width:5%;
     padding:10px;
 }
 
-td:hover{
+.td-worktable:hover{
     background-color:black;
     color:white;
 

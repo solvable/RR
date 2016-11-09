@@ -20,50 +20,43 @@
     <table class="metadata_table">
       <tr>
         <td>Customer Id:</td>
-        <td>{{instance.id}}</td>
+        <td class="td-worktable">{{instance.id}}</td>
         <td>Source:</td>
-          <td>{{instance.source}}</td>
+          <td class="td-worktable">{{instance.source}}</td>
       </tr>
       <tr>
         <td>Created:</td>
-          <td>{{instance.created}}</td>
+          <td class="td-worktable">{{instance.created}}</td>
         <td>Modified:</td>
-          <td>{{instance.modified}}</br></td>
+          <td class="td-worktable">{{instance.modified}}</br></td>
       </tr>
       <tr>
           <td></td>
         <td></td>
         <td> Modified by:</td>
-          <td>{{instance.modified_by}}</td>
+          <td class="td-worktable">{{instance.modified_by}}</td>
       </tr>
 
 
         <tr>
             <td>Customer Name:</td>
-            <td>{{instance.fullName}}</td>
+            <td class="td-worktable">{{instance.fullName}}</td>
             <td>Phone 1:</td>
-            <td>{{instance.phone1}}</td>
+            <td class="td-worktable">{{instance.phone1}}</td>
         </tr>
         <tr>
             <td >Billing Address:</td>
-            <td rowspan="2">{{instance.billStreet}}<br>{{instance.billCity}}, {{instance.billState}},{{instance.billZip}}</td>
+            <td class="td-worktable" rowspan="2">{{instance.billStreet}}<br>{{instance.billCity}}, {{instance.billState}},{{instance.billZip}}</td>
             <td>Phone 2:</td>
-            <td>{{instance.phone2}}</td>
+            <td class="td-worktable">{{instance.phone2}}</td>
         </tr>
         <tr>
             <td></td>
 
             <td>Email:</td>
-            <td>{{instance.email}}</td>
+            <td class="td-worktable">{{instance.email}}</td>
         </tr>
-
-
-
-
     </table>
-
-
-
 </div>
 
 
@@ -114,13 +107,13 @@
 
         <table class="tg">
   <p><tr>
-    <th class="tg-031e">{{obj.jobStreet}}</th>
-    <th class="tg-031e">{{obj.jobCity}},</th>
-    <th class="tg-031e">{{obj.jobState}}</th>
-    <th class="tg-031e">{{obj.jobZip}}</th>
-    <th class="tg-031e">&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</th>
-    <th class="tg-031e">&nbsp;&nbsp;&nbsp;<a href="{{ get_absolute_url }}workorder_detail/{{obj.jobId}}" class="btn btn-info"
-                   role="button">View</a></th>
+    <td class="td-worktable">{{obj.jobStreet}}</td>
+    <td class="td-worktable">{{obj.jobCity}},</td>
+    <td class="td-worktable">{{obj.jobState}}</td>
+    <td class="td-worktable">{{obj.jobZip}}</td>
+    <td class="td-worktable">&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
+    <td>&nbsp;&nbsp;&nbsp;<a href="{{ get_absolute_url }}workorder_detail/{{obj.jobId}}" class="btn btn-info"
+                   role="button">View</a></td>
 
   </tr>
      </p>
