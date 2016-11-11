@@ -4,22 +4,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import TemplateView
 
 
-from .views import (
-    index,
-    customer_browse,
-    customer_create,
-    customer_detail,
-    customer_update,
-    customer_delete,
-    workorder_create,
-    workorder_detail,
-    workorder_delete,
-    workorder_update,
-    recents,
-    calendar,
-    open_workorders,
-
-)
+from .views import *
 
 
 # Example url(r'^customers/$', "<appname>.views.<function_name>"),
@@ -38,7 +23,8 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/workorder_detail/(?P<jobId>\d+)/$', workorder_detail, name='workorder_detail'),
     url(r'^(?P<id>\d+)/workorder_detail/(?P<jobId>\d+)/workorder_update/$', workorder_update, name='workorder_update'),
     url(r'^(?P<id>\d+)/workorder_detail/(?P<jobId>\d+)/workorder_delete/$', workorder_delete, name='workorder_delete'),
-
+    url(r'^(?P<id>\d+)/workorder_detail/(?P<jobId>\d+)/appointment_create/$', appointment_create, name='appointment_create'),
+    url(r'^(?P<id>\d+)/workorder_detail/(?P<jobId>\d+)/appointments/(?P<appId>\d+)/$', appointment_detail, name ='appointment_detail'),
 ]
 
 

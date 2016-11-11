@@ -124,10 +124,62 @@ class WorkOrder(models.Model):
 
 
 class Appointment(models.Model):
-
+    appId = models.AutoField(primary_key=True, default=0)
     workorder_id = models.ForeignKey(
         'WorkOrder',
     )
+    title = models.CharField(null=True, blank=True, choices=TITLES,max_length=10)
     schedule_date = models.DateField(null=True, blank=True)
     time_slot = models.CharField(choices=TIME_SLOTS, default='', max_length=20)
+    start = models.CharField(null=True, max_length=30, blank=True)
+    end = models.CharField(null=True, max_length=30, blank=True)
+    appt = models.CharField(null=True, max_length=50, blank=True)
+    created = models.DateTimeField(auto_now=False, auto_now_add=True, null=True)
+    modified = models.DateTimeField(auto_now=True, auto_now_add=False, null=True)
+    modified_by = models.CharField(max_length=50, default=1, null=True)
+    def save(self, *args, **kwargs):
+
+        if self.time_slot == t0810:
+            start = "8:00"
+            end = "10:00"
+        elif self.time_slot == t0911:
+            start = "9:00"
+            end = "11:00"
+        elif self.time_slot == t1012:
+            start = "10:00"
+            end = "12:00"
+        elif self.time_slot == t1113:
+            start = "11:00"
+            end = "13:00"
+        elif self.time_slot == t1214:
+            start = "12:00"
+            end = "14:00"
+        elif self.time_slot == t1315:
+            start = "13:00"
+            end = "15:00"
+        else:
+            start = "14:00"
+            end = "16:00"
+        self.start = start
+        self.end = end
+        if self.start:
+            d =str(self.schedule_date)
+
+            self.start = d+"T"+start
+        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.start) +"', end:'"+ str(self.end) + "'}")
+        super(Appointment, self).save(*args, **kwargs)
+
+
+    def __unicode__(self):
+        return self.start
+
+
+    def __str__(self):
+        return self.start
+
+    def __delete__(self, instance):
+        return reverse("customers:index")
+
+    def get_absolute_url(self):
+        return reverse("customers:index")
 

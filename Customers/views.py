@@ -9,7 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect, request
 from django.shortcuts import render, get_object_or_404, redirect, Http404
 from django.core.urlresolvers import reverse, reverse_lazy
 from .models import Customer, WorkOrder
-from .forms import CustomerForm, WorkOrderForm
+from .forms import *
 from django import forms
 from schedule.models import Event, EventRelation, Calendar
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -68,10 +68,13 @@ def calendar(request):
     year =d.year
     c=calendar.HTMLCalendar(firstweekday=0)
     a = str(c.formatmonth(year,month))
+    appointments = Appointment.objects.all()
+
 
 
     context = {
         "calendar":a,
+        "appointments":appointments,
     }
 
     return render(request, "calendar.html", context)
@@ -400,3 +403,113 @@ def workorder_delete(request, id=None, jobId=None):
 
 def confirm_delete(request):
     workorder_delete(request, id=None, jobId=None)
+
+
+    ###############################################
+
+
+def appointment_create(request, id=None, jobId=None):
+    '''
+    View for creating a work order Object
+    '''
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http404
+
+    # Load data from Workorder
+    instance = get_object_or_404(Customer, id=id)
+    workorder = instance.workorder_set.filter(jobId=jobId)
+
+
+    # Load Appointment Form
+    form = AppointmentForm(request.POST or None, request.FILES or None)
+    form.fields["workorder_id"].initial = jobId
+    form.fields["workorder_id"].disabled = True
+
+    # Check if form is valid
+    if form.is_valid():
+        # Save instance
+        instance = form.save(commit=False)
+        instance.user = request.user
+        instance.modified_by = str(request.user)
+        instance.save()
+        # Message success
+        messages.success(request, "Successfully Created")
+        # Redirect to detail view
+        return HttpResponseRedirect(instance.get_absolute_url())
+
+    # Set context variables
+    context = {
+        "form": form,
+        "instance": instance,
+    }
+    return render(request, "appointment_form.html", context)
+
+def appointment_detail(request, id, jobId):
+    '''
+    View for Customer object details including address info and workorder
+    '''
+
+    # set global variables
+    instance = get_object_or_404(Customer, id=id)
+    queryset = instance.workorder_set.filter(jobId=jobId)
+    appointmentset = queryset.appointment_set.filter(appId=appId)
+
+    # Set context variables
+    context = {
+        "appointment_title": "Appointment Info:",
+        "instance": instance,
+        "queryset": queryset,
+        "appointmentset":appointmentset,
+
+    }
+
+    return render(request, "appointment_detail.html", context)
+
+def appointment_update(request, id=None, jobId=None, appId=None):
+
+    '''
+    View for updating appointment object
+    '''
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http404
+
+    instance = get_object_or_404(Appointment, customer_id=id, jobId=jobId, appId = appId)
+    # Load appointment Form
+    form = AppointmentForm(request.POST or None, request.FILES or None, instance=instance)
+    # Check if form is valid
+    if form.is_valid():
+        # Save instance
+        instance = form.save(commit=False)
+        instance.modified_by = str(request.user)
+        instance.save()
+        # Message success
+        messages.success(request, "Successfully Updated")
+        # Redirect to detail view
+        return HttpResponseRedirect(instance.get_absolute_url())
+
+    context = {
+        "title": "Appointment Info:",
+        "instance": instance,
+        "form": form
+    }
+    return render(request, "workorder_form.html", context)
+
+def workorder_delete(request, id=None, jobId=None, appId = None):
+    """
+     View for Deleting a workorder Object
+    :param request: httpRequest
+    :param id: Customer.id
+    :param jobId: wordorder.jobId
+    :return:
+    """
+    if not (request.user.is_staff or request.user.is_superuser):
+        raise Http404
+
+    instance = get_object_or_404(Appointment, customer_id=id, jobId=jobId, appId=appId)
+    instance.delete()
+    # Message success
+    messages.success(request, "Successfully Deleted")
+    return HttpResponseRedirect(instance.get_absolute_url())
+
+def confirm_delete(request):
+    appointment_delete(request, id=None, jobId=None)

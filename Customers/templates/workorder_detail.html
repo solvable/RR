@@ -117,5 +117,10 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYA6304AZ4M-qvzuIXVnEaRNYftGu_cDM&callback=initMap"></script>
     {% endfor %}
 
+  {% block appointment %}
+<a href="{{ get_absolute_url }}appointment_create" class="btn btn-success" role="button">New Appointment</a>
+
+{% endblock appointment %}
+
 {% endblock workorder-content %}
 
