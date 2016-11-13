@@ -62,19 +62,24 @@ def index(request):
 
 def calendar(request):
     import calendar
+    apps = Appointment.objects.all()
     d = datetime.datetime.today()
     day = d.day
     month =d.month
     year =d.year
     c=calendar.HTMLCalendar(firstweekday=0)
     a = str(c.formatmonth(year,month))
-    appointments = Appointment.objects.all()
+    apt = []
+    for i in apps:
+        apt.append(i.appt)
+    print apt
+
 
 
 
     context = {
         "calendar":a,
-        "appointments":appointments,
+        "appointments":apt,
     }
 
     return render(request, "calendar.html", context)
@@ -278,7 +283,7 @@ def customer_delete(request, id=None):
     instance.delete()
     # Message success
     messages.success(request, "Successfully Deleted")
-    return redirect("customers:list")
+    return redirect("customers:index")
 
 
 #################### WORKORDER VIEWS ###################
@@ -338,7 +343,12 @@ def workorder_detail(request, id, jobId):
     # set global variables
     instance=get_object_or_404(Customer,id=id)
     queryset = instance.workorder_set.filter(jobId=jobId)
-
+    workorder = WorkOrder.objects.get(jobId=jobId)
+    #appointments = workorder.appointment_set.all()
+    if workorder.appointment_set.exists():
+        appointment = Appointment.objects.get(workorder_id = workorder.jobId)
+    else:
+        appointment = "None Scheduled"
 
     # Set context variables
     context ={
@@ -347,6 +357,7 @@ def workorder_detail(request, id, jobId):
             "lat":instance.lat,
             "lng":instance.lng,
             "queryset":queryset,
+            "appointment":appointment,
             }
 
     return render(request, "workorder_detail.html", context)
@@ -417,7 +428,7 @@ def appointment_create(request, id=None, jobId=None):
 
     # Load data from Workorder
     instance = get_object_or_404(Customer, id=id)
-    workorder = instance.workorder_set.filter(jobId=jobId)
+    workorder = WorkOrder.objects.get(jobId=jobId)
 
 
     # Load Appointment Form
@@ -428,14 +439,16 @@ def appointment_create(request, id=None, jobId=None):
     # Check if form is valid
     if form.is_valid():
         # Save instance
-        instance = form.save(commit=False)
-        instance.user = request.user
-        instance.modified_by = str(request.user)
-        instance.save()
+        form = form.save(commit=False)
+        form.user = request.user
+        form.modified_by = str(request.user)
+        form.save()
+
         # Message success
         messages.success(request, "Successfully Created")
         # Redirect to detail view
-        return HttpResponseRedirect(instance.get_absolute_url())
+
+        return HttpResponseRedirect(workorder.get_absolute_url())
 
     # Set context variables
     context = {
@@ -494,7 +507,7 @@ def appointment_update(request, id=None, jobId=None, appId=None):
     }
     return render(request, "workorder_form.html", context)
 
-def workorder_delete(request, id=None, jobId=None, appId = None):
+def appointment_delete(request, id=None, jobId=None, appId = None):
     """
      View for Deleting a workorder Object
     :param request: httpRequest

@@ -111,10 +111,10 @@ class WorkOrder(models.Model):
 
 
     def __unicode__(self):
-        return self.jobStreet
+        return self.jobId
 
     def __str__(self):
-        return self.jobStreet
+        return self.jobId
 
     def __delete__(self, instance):
         return reverse("customers:detail", args=[str(self.customer_id)])
@@ -133,7 +133,7 @@ class Appointment(models.Model):
     time_slot = models.CharField(choices=TIME_SLOTS, default='', max_length=20)
     start = models.CharField(null=True, max_length=30, blank=True)
     end = models.CharField(null=True, max_length=30, blank=True)
-    appt = models.CharField(null=True, max_length=50, blank=True)
+    appt = models.CharField(null=True, max_length=70, blank=True)
     created = models.DateTimeField(auto_now=False, auto_now_add=True, null=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False, null=True)
     modified_by = models.CharField(max_length=50, default=1, null=True)
@@ -162,23 +162,23 @@ class Appointment(models.Model):
             end = "16:00"
         self.start = start
         self.end = end
-        if self.start:
-            d =str(self.schedule_date)
 
-            self.start = d+"T"+start
-        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.start) +"', end:'"+ str(self.end) + "'}")
+        if self.appt:
+            self.appt=''
+
+        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'"+ str(self.end) + "'}")
         super(Appointment, self).save(*args, **kwargs)
 
-
-    def __unicode__(self):
-        return self.start
+    def __unicode(self):
+        return unicode(self.schedule_date)
 
 
     def __str__(self):
-        return self.start
+        return str(self.schedule_date)
 
     def __delete__(self, instance):
         return reverse("customers:index")
+
 
     def get_absolute_url(self):
         return reverse("customers:index")
