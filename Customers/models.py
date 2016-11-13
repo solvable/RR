@@ -124,7 +124,7 @@ class WorkOrder(models.Model):
 
 
 class Appointment(models.Model):
-    appId = models.AutoField(primary_key=True, default=0)
+    appId = models.AutoField(primary_key=True)
     workorder_id = models.ForeignKey(
         'WorkOrder',
     )

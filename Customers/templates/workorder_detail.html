@@ -76,15 +76,7 @@
       </tr>
   </table>
   <table>
-      <th>Appointments:</th>
 
-      <tr>
-          <td>
-
-        {{ appointment }}
-
-      </td>
-      </tr>
 
 
   </table>
@@ -130,6 +122,20 @@
 
   {% block appointment %}
 <a href="{{ get_absolute_url }}appointment_create" class="btn btn-success" role="button">New Appointment</a>
+
+
+
+        <table>
+            {% for obj in appointment %}
+            <tr>
+                <td>
+                    {{obj.schedule_date}}
+                </td>
+                <td> {{}} </td>
+            {%endfor%}
+            </tr>
+
+            </table>
 
 {% endblock appointment %}
 

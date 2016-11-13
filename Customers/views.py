@@ -343,12 +343,13 @@ def workorder_detail(request, id, jobId):
     # set global variables
     instance=get_object_or_404(Customer,id=id)
     queryset = instance.workorder_set.filter(jobId=jobId)
-    workorder = WorkOrder.objects.get(jobId=jobId)
-    #appointments = workorder.appointment_set.all()
-    if workorder.appointment_set.exists():
-        appointment = Appointment.objects.get(workorder_id = workorder.jobId)
-    else:
-        appointment = "None Scheduled"
+
+
+    for i in queryset:
+        if i.appointment_set.exists():
+            appointment = (Appointment.objects.all().filter(workorder_id = i.jobId))
+        else:
+            appointment = "None Scheduled"
 
     # Set context variables
     context ={
