@@ -92,7 +92,7 @@
 
 
 {% block jobsite-content %}
-    <div id="jobsite_list_div" class="container-flui>
+    <div id="jobsite-div" class="container-fluid">
         <h2>Jobsites:</h2>
         <div id=" btnCreate">
             <a href="{{ get_absolute_url }}jobsite_create" class="btn btn-success" role="button">New Job Site</a>
@@ -102,11 +102,11 @@
             <table class="tg">
                 <p>
                     <tr>
-                        <td class="td-worktable">{{obj.jobStreet}}</td>
-                        <td class="td-worktable">{{obj.jobCity}},</td>
-                        <td class="td-worktable">{{obj.jobState}}</td>
-                        <td class="td-worktable">{{obj.jobZip}}</td>
-                        <td class="td-worktable">&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span
+                        <td>{{obj.jobStreet}}</td>
+                        <td>{{obj.jobCity}},</td>
+                        <td>{{obj.jobState}}</td>
+                        <td>{{obj.jobZip}}</td>
+                        <td>&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span
                                 class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
                         <td>&nbsp;&nbsp;&nbsp;<a href="{{ get_absolute_url }}jobsite_detail/{{obj.jobId}}"
                                                  class="btn btn-info" role="button">View</a></td>

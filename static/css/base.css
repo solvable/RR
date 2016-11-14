@@ -129,20 +129,24 @@ table{
 
 }
 
-tr{
-    border:1px solid black;
+table tr{
+    border:1px solid transparent;
     vertical-align: top;
 
 }
 
-.td-worktable tr, td{
+tbody tr:nth-child(even){
+    background-color:lightblue;
 
-    text-align: left;
-    width:5%;
-    padding:10px;
 }
 
-.td-worktable:hover{
+table tr, td{
+    
+    text-align: left;
+    width:5%;
+}
+
+td:hover{
     background-color:black;
     color:white;
 
@@ -191,6 +195,16 @@ tr{
 }
 /* end map */
 
+#appointment-div{
+
+    float:right;
+
+}
+#jobsite-div{
+    float:right;
+
+
+}
 
 /* pagination */
 // change the day's background color just for fun

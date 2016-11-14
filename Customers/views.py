@@ -518,12 +518,14 @@ def appointment_delete(request, id=None, jobId=None, appId = None):
     """
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http404
+    instance = get_object_or_404(Customer, id=id)
+    jobsite = Jobsite.objects.get(jobId=jobId)
+    appointment = Appointment.objects.get(appId=appId)
 
-    instance = get_object_or_404(Appointment, customer_id=id, jobId=jobId, appId=appId)
-    instance.delete()
+    appointment.delete()
     # Message success
     messages.success(request, "Successfully Deleted")
-    return HttpResponseRedirect(instance.get_absolute_url())
+    return HttpResponseRedirect(jobsite.get_absolute_url())
 
 def confirm_delete(request):
-    appointment_delete(request, id=None, jobId=None)
+    appointment_delete(request, id=None, jobId=None, appId=None)

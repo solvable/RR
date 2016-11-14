@@ -9,7 +9,7 @@
 
   {% block appointment %}
 
-
+    <div id= "appointment-div">
     <a href="{{ get_absolute_url }}appointment_update" type=button class="btn btn-primary">Edit</a>
     <a href="{{ get_absolute_url }}appointment_delete"
        onclick="return confirm('Are you sure want to delete this Appointment and all associated attachements, think really hard before you press OK?');"
@@ -50,5 +50,5 @@
 
 
             </table>
-
+</div>
 {% endblock appointment %}
