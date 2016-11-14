@@ -1,0 +1,100 @@
+{% extends "customer_detail.html" %}
+{% block addhead %}
+
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+
+
+{% endblock addhead %}
+
+
+{% block jobsite-content %}
+
+<div id="jobsite_info_div" class='container col-xs-12 col-md-12'>
+    <h3>{{ jobsite_title }}</h3>
+    {% for obj in queryset %}
+    <script defer type="text/javascript">
+        var map;
+        var lati = parseFloat("{{obj.lat}}");
+        var long = parseFloat("{{obj.lng}}");
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: lati, lng: long},
+                zoom: 20,
+                mapTypeId: 'hybrid',
+                keyboardShortcuts: false,
+
+
+            });
+
+            var marker = new google.maps.Marker({
+
+                animation: google.maps.Animation.BOUNCE,
+                position: {lat: lati, lng: long},
+                map: map,
+                title: "{{obj.jobStreet}}"
+
+            });
+
+            var trafficLayer = new google.maps.TrafficLayer();
+            trafficLayer.setMap(map);
+
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYA6304AZ4M-qvzuIXVnEaRNYftGu_cDM&callback=initMap"></script>
+    <a href="{{ get_absolute_url }}jobsite_update" type=button class="btn btn-primary">Edit</a>
+    <a href="{{ get_absolute_url }}jobsite_delete"
+       onclick="return confirm('Are you sure want to delete this Jobsite and all associated work orders, think really hard before you press OK?');"
+       type="button" class="btn btn-danger">Delete</a>
+    <table class="tg">
+        <tr>
+            <td>Jobsite #:</td>
+            <td colspan="3">{{obj.jobId}}</td>
+
+        </tr>
+        <tr>
+            <td>Created:</td>
+            <td>{{obj.created}}</td>
+            <td>Modified:</td>
+            <td>{{obj.modified}}</td>
+        </tr>
+        <tr>
+            <td>Job Address:</td>
+            <td>{{obj.jobStreet}}<br>{{obj.jobCity}}, {{obj.jobState}} {{obj.jobZip}}</td>
+            <td>Modified By:</td>
+            <td>{{obj.modified_by}}</td>
+        </tr>
+        <tr>
+            <td>Access:</td>
+            <td>{{obj.access}}</td>
+            <td>Stories:</td>
+            <td>{{obj.stories}}</td>
+        </tr>
+        <tr>
+            <td>Notes:</td>
+            <td colspan="3" rowspan="3">{{obj.notes}}</td>
+        </tr>
+
+    </table>
+
+
+    {% endfor %}
+
+
+    {%block appointment%}
+    <a href="{{ get_absolute_url }}appointment_create" class="btn btn-success" role="button">New Appointment</a>
+    <table>
+        {% for obj in appointment %}
+        <tr>
+            <td><a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">{{obj.schedule_date}}</a></td>
+            <td>{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
+            {%endfor%}
+        </tr>
+
+    </table>
+    {%endblock appointment%}
+
+    {% endblock jobsite-content %}
+

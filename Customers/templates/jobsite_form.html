@@ -1,9 +1,9 @@
 {% extends "customer_detail.html" %}
-{% block workorder-content %}
-<h1>Work Order Form</h1>
+{% block jobsite-content %}
+<h1>Jobsite Form</h1>
 <form method="POST" action="" enctype="multipart/form">{% csrf_token %}
     <input type="hidden" name="customer_id" value="{{ customer_id }}">
         {{ form.as_p }}
-    <input type="submit" value="Save Work Order">
+    <input type="submit" value="Save Jobsite">
 </form>
-{% endblock workorder-content %}
+{% endblock jobsite-content %}

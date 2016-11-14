@@ -130,7 +130,7 @@ table{
 }
 
 tr{
-
+    border:1px solid black;
     vertical-align: top;
 
 }
@@ -155,14 +155,21 @@ tr{
 #first-content-block{
     float:left;
     width:50%;
+    margin-bottom:50px;
 }
 /* end first-content block */
 
 /* second-content-block */
 #second-content-block{
-    float:right;
+    float:left;
     width:50%;
 
+
+}
+
+#right_pane{
+
+    float:right;
 }
 
 

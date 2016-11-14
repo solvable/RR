@@ -5,19 +5,15 @@
 
 {% block content %}
 <div id="weather">
-
     <h3>
-            <img src="{{icon}}" id="weather_icon"><br>
-            Currently: {{status|capfirst}}<br>
-            Min/Max Temp:  {{temp_min}}/{{temp_max}}<br>
-            Wind Speed:{{wind_speed}}<br>
+        <img src="{{icon}}" id="weather_icon"><br>
+        Currently: {{status|capfirst}}<br>
+        Min/Max Temp: {{temp_min}}/{{temp_max}}<br>
+        Wind Speed:{{wind_speed}}<br>
 
-            <!--5 day Forecast:
-            {{lst}}-->
+        <!--5 day Forecast:
+        {{lst}}-->
     </h3>
 </div>
-
-
-
 
 {% endblock content %}

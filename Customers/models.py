@@ -53,10 +53,10 @@ class Customer(models.Model):
         return str(self.id)
 
     def get_absolute_url(self):
-        return reverse("customers:detail", kwargs={"id": self.id})
+        return reverse("customers:customer_detail", kwargs={"id": self.id})
 
     def edit_url(self):
-        return reverse("customers:edit", kwargs={"id":self.id})
+        return reverse("customers:customer_edit", kwargs={"id":self.id})
 
     class Meta:
         ordering = ["-created", "-modified"]
@@ -64,7 +64,7 @@ class Customer(models.Model):
 def upload_location(instance, filename):
     return "%s/%s" % (instance.jobId, filename)
 
-class WorkOrder(models.Model):
+class Jobsite(models.Model):
 
     customer_id = models.ForeignKey(
         'Customer',
@@ -78,14 +78,8 @@ class WorkOrder(models.Model):
     jobZip = models.CharField(max_length=5)
     stories = models.IntegerField()
     access = models.CharField(max_length=20)
-    problem = models.CharField(max_length=200)
     notes = models.CharField(max_length=150, blank=True)
     picture = models.ImageField(null=True,blank=True)
-
-    assigned_to = models.CharField(choices=LEAD_ASSIGNED_CHOICES,max_length=20, blank=True, default="")
-    contract = models.FileField(upload_to=upload_location, blank=True)
-    crew_assigned = models.CharField(choices=JOB_ASSIGNED_CHOICES ,max_length=50, blank=True, default="")
-    completed = models.BooleanField(default=False, blank=True)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
     latlng = models.CharField(blank=True, max_length=100, default="")
@@ -107,7 +101,7 @@ class WorkOrder(models.Model):
         self.lat = lat
         self.lng = lng
         self.latlng = lat + "," + lng
-        super(WorkOrder, self).save(*args, **kwargs)
+        super(Jobsite, self).save(*args, **kwargs)
 
 
     def __unicode__(self):
@@ -117,26 +111,34 @@ class WorkOrder(models.Model):
         return self.jobId
 
     def __delete__(self, instance):
-        return reverse("customers:detail", args=[str(self.customer_id)])
+        return reverse("customers:customer_detail", args=[str(self.customer_id)])
 
     def get_absolute_url(self):
-        return reverse("customers:detail", args=[str(self.customer_id)])
+        return reverse("customers:customer_detail", args=[str(self.customer_id)])
 
 
 class Appointment(models.Model):
     appId = models.AutoField(primary_key=True)
-    workorder_id = models.ForeignKey(
-        'WorkOrder',
+    jobsite_id = models.ForeignKey(
+        'Jobsite',
     )
     title = models.CharField(null=True, blank=True, choices=TITLES,max_length=10)
+    problem = models.CharField(max_length=200)
+
     schedule_date = models.DateField(null=True, blank=True)
     time_slot = models.CharField(choices=TIME_SLOTS, default='', max_length=20)
     start = models.CharField(null=True, max_length=30, blank=True)
     end = models.CharField(null=True, max_length=30, blank=True)
     appt = models.CharField(null=True, max_length=70, blank=True)
+
+    assigned_to = models.CharField(choices=LEAD_ASSIGNED_CHOICES,max_length=20, blank=True, default="")
+    contract = models.FileField(upload_to=upload_location, blank=True)
+
+    completed = models.BooleanField(default=False, blank=True)
     created = models.DateTimeField(auto_now=False, auto_now_add=True, null=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False, null=True)
     modified_by = models.CharField(max_length=50, default=1, null=True)
+    notes = models.TextField(max_length=200, default='', null=True)
     def save(self, *args, **kwargs):
 
         if self.time_slot == t0810:
@@ -170,7 +172,7 @@ class Appointment(models.Model):
         super(Appointment, self).save(*args, **kwargs)
 
     def __unicode(self):
-        return unicode(self.schedule_date)
+        return str(self.schedule_date)
 
 
     def __str__(self):
@@ -179,7 +181,5 @@ class Appointment(models.Model):
     def __delete__(self, instance):
         return reverse("customers:index")
 
-
     def get_absolute_url(self):
         return reverse("customers:index")
-

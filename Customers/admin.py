@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Customer, WorkOrder, Appointment
+from .models import Customer, Jobsite, Appointment
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ["lastName", "firstName", "billStreet", "billCity", "billState", "billZip", "phone1", "phone2", "email"]
@@ -15,7 +15,7 @@ class JobsiteAdmin(admin.ModelAdmin):
     list_filter = ["modified"]
     search_fields=["jobStreet", "jobCity", "modified"]
     class Meta:
-        model = WorkOrder
+        model = Jobsite
 
 class AppointmentAdmin(admin.ModelAdmin):
     class Meta:
@@ -24,5 +24,5 @@ class AppointmentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Customer, CustomerAdmin)
-admin.site.register(WorkOrder, JobsiteAdmin)
+admin.site.register(Jobsite, JobsiteAdmin)
 admin.site.register(Appointment, AppointmentAdmin)

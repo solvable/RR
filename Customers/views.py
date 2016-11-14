@@ -1,22 +1,14 @@
-import re
-import haystack as haystack
-import whoosh
-import datetime
-from forecastio import load_forecast
+
 from django.contrib import messages
-from django.db.models import Q
+
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.shortcuts import render, get_object_or_404, redirect, Http404
-from django.core.urlresolvers import reverse, reverse_lazy
-from .models import Customer, WorkOrder
+from .models import *
 from .forms import *
 from django import forms
-from schedule.models import Event, EventRelation, Calendar
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from haystack.management.commands import update_index, rebuild_index
-from schedule.models import Event, Calendar
-import simplejson
-from django.core import serializers
+
+
 
 
 def search(request):
@@ -149,7 +141,7 @@ def customer_browse(request):
 
 def open_workorders(request):
 
-    queryset_list = WorkOrder.objects.all().filter(completed=False).order_by('created')
+    queryset_list = Jobsite.objects.all().filter(completed=False).order_by('created')
     customers = Customer.objects.all()
     paginator = Paginator(queryset_list, 25) # show 25 customers per page
     page_request_var = "page"
@@ -204,11 +196,11 @@ def customer_create(request):
 
 def customer_detail(request, id):
     '''
-    View for Customer object details including address info and workorders
+    View for Customer object details including address info and jobsites
     '''
     # set global variables
     instance=get_object_or_404(Customer,id=id)
-    queryset_list = instance.workorder_set.all()
+    queryset_list = instance.jobsite_set.all()
     paginator = Paginator(queryset_list, 15) # show 15 customers per page
     page_request_var = "page"
     page = request.GET.get(page_request_var)
@@ -228,7 +220,7 @@ def customer_detail(request, id):
             "instance":instance,
             "lat":instance.lat,
             "lng":instance.lng,
-            "workorder":queryset,
+            "jobsite":queryset,
             "page_request_var": page_request_var,
 
     }
@@ -286,10 +278,10 @@ def customer_delete(request, id=None):
     return redirect("customers:index")
 
 
-#################### WORKORDER VIEWS ###################
+#################### JOBSITE VIEWS ###################
 
 
-def workorder_create(request, id=None):
+def jobsite_create(request, id=None):
     '''
     View for creating a work order Object
     '''
@@ -301,7 +293,7 @@ def workorder_create(request, id=None):
     instance=get_object_or_404(Customer,id=id)
 
     # Load Work Order Form
-    form = WorkOrderForm(request.POST or None, request.FILES or None)
+    form = JobsiteForm(request.POST or None, request.FILES or None)
     form.fields["customer_id"].initial= instance.id
     form.fields["customer_id"].disabled=True
 
@@ -332,28 +324,28 @@ def workorder_create(request, id=None):
         "form":form,
         "instance":instance,
     }
-    return render(request, "workorder_form.html", context)
+    return render(request, "jobsite_form.html", context)
 
 
-def workorder_detail(request, id, jobId):
+def jobsite_detail(request, id, jobId):
     '''
-    View for Customer object details including address info and workorder
+    View for Customer object details including address info and jobsite
     '''
 
     # set global variables
     instance=get_object_or_404(Customer,id=id)
-    queryset = instance.workorder_set.filter(jobId=jobId)
+    queryset = instance.jobsite_set.filter(jobId=jobId)
 
 
     for i in queryset:
         if i.appointment_set.exists():
-            appointment = (Appointment.objects.all().filter(workorder_id = i.jobId))
+            appointment = (Appointment.objects.all().filter(jobsite_id = i.jobId))
         else:
             appointment = "None Scheduled"
 
     # Set context variables
     context ={
-            "workorder_title":"Work Order Info:",
+            "jobsite_title":"Jobsite Info:",
             "instance":instance,
             "lat":instance.lat,
             "lng":instance.lng,
@@ -361,19 +353,19 @@ def workorder_detail(request, id, jobId):
             "appointment":appointment,
             }
 
-    return render(request, "workorder_detail.html", context)
+    return render(request, "jobsite_detail.html", context)
 
-def workorder_update(request, id=None, jobId=None):
+def jobsite_update(request, id=None, jobId=None):
 
     '''
-    View for updating workorder object
+    View for updating jobsite object
     '''
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http404
 
-    instance = get_object_or_404(WorkOrder, customer_id=id, jobId=jobId)
-    # Load workorder Form
-    form = WorkOrderForm(request.POST or None, request.FILES or None, instance=instance)
+    instance = get_object_or_404(Jobsite, customer_id=id, jobId=jobId)
+    # Load jobsite Form
+    form = JobsiteForm(request.POST or None, request.FILES or None, instance=instance)
     # Check if form is valid
     if form.is_valid():
         # Save instance
@@ -386,27 +378,27 @@ def workorder_update(request, id=None, jobId=None):
         return HttpResponseRedirect(instance.get_absolute_url())
 
     context = {
-        "title": "Work Order Info:",
+        "title": "Jobsite Info:",
         "instance": instance,
         "form": form
     }
-    return render(request, "workorder_form.html", context)
+    return render(request, "jobsite_form.html", context)
 
 
 
-def workorder_delete(request, id=None, jobId=None):
+def jobsite_delete(request, id=None, jobId=None):
     """
-     View for Deleting a workorder Object
+     View for Deleting a jobsite Object
     :param request: httpRequest
     :param id: Customer.id
-    :param jobId: wordorder.jobId
+    :param jobId: jobsite.jobId
     :return:
     """
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http404
 
 
-    instance=get_object_or_404(WorkOrder, customer_id=id, jobId=jobId)
+    instance=get_object_or_404(Jobsite, customer_id=id, jobId=jobId)
     instance.delete()
     # Message success
     messages.success(request, "Successfully Deleted")
@@ -414,7 +406,7 @@ def workorder_delete(request, id=None, jobId=None):
 
 
 def confirm_delete(request):
-    workorder_delete(request, id=None, jobId=None)
+    jobsite_delete(request, id=None, jobId=None)
 
 
     ###############################################
@@ -427,15 +419,15 @@ def appointment_create(request, id=None, jobId=None):
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http404
 
-    # Load data from Workorder
+    # Load data from Jobsite
     instance = get_object_or_404(Customer, id=id)
-    workorder = WorkOrder.objects.get(jobId=jobId)
+    jobsite = Jobsite.objects.get(jobId=jobId)
 
 
     # Load Appointment Form
     form = AppointmentForm(request.POST or None, request.FILES or None)
-    form.fields["workorder_id"].initial = jobId
-    form.fields["workorder_id"].disabled = True
+    form.fields["jobsite_id"].initial = jobId
+    form.fields["jobsite_id"].disabled = True
 
     # Check if form is valid
     if form.is_valid():
@@ -449,7 +441,7 @@ def appointment_create(request, id=None, jobId=None):
         messages.success(request, "Successfully Created")
         # Redirect to detail view
 
-        return HttpResponseRedirect(workorder.get_absolute_url())
+        return HttpResponseRedirect(jobsite.get_absolute_url())
 
     # Set context variables
     context = {
@@ -458,22 +450,24 @@ def appointment_create(request, id=None, jobId=None):
     }
     return render(request, "appointment_form.html", context)
 
-def appointment_detail(request, id, jobId):
+def appointment_detail(request, id, jobId, appId):
     '''
-    View for Customer object details including address info and workorder
+    View for Appointment object details including address info and jobsite
     '''
 
     # set global variables
     instance = get_object_or_404(Customer, id=id)
-    queryset = instance.workorder_set.filter(jobId=jobId)
-    appointmentset = queryset.appointment_set.filter(appId=appId)
+    queryset = instance.jobsite_set.filter(jobId=jobId)
+    appointment = Appointment.objects.all().get(appId=appId)
+
+
 
     # Set context variables
     context = {
         "appointment_title": "Appointment Info:",
         "instance": instance,
         "queryset": queryset,
-        "appointmentset":appointmentset,
+        "appointment":appointment,
 
     }
 
@@ -487,9 +481,12 @@ def appointment_update(request, id=None, jobId=None, appId=None):
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http404
 
-    instance = get_object_or_404(Appointment, customer_id=id, jobId=jobId, appId = appId)
+    instance = get_object_or_404(Customer, id=id)
+    jobsite = Jobsite.objects.get(jobId=jobId)
+    appointment = Appointment.objects.get(appId=appId)
+
     # Load appointment Form
-    form = AppointmentForm(request.POST or None, request.FILES or None, instance=instance)
+    form = AppointmentForm(request.POST or None, request.FILES or None, instance=appointment)
     # Check if form is valid
     if form.is_valid():
         # Save instance
@@ -499,18 +496,21 @@ def appointment_update(request, id=None, jobId=None, appId=None):
         # Message success
         messages.success(request, "Successfully Updated")
         # Redirect to detail view
-        return HttpResponseRedirect(instance.get_absolute_url())
+        id = id
+        jobId = jobId
+        appId = appId
+        return HttpResponseRedirect(appointment.get_absolute_url())
 
     context = {
         "title": "Appointment Info:",
         "instance": instance,
         "form": form
     }
-    return render(request, "workorder_form.html", context)
+    return render(request, "jobsite_form.html", context)
 
 def appointment_delete(request, id=None, jobId=None, appId = None):
     """
-     View for Deleting a workorder Object
+     View for Deleting a jobsite Object
     :param request: httpRequest
     :param id: Customer.id
     :param jobId: wordorder.jobId

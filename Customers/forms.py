@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import SelectDateWidget, Textarea, EmailInput, HiddenInput
-from .models import Customer, WorkOrder, Appointment
+from .models import Customer, Jobsite, Appointment
 from haystack.forms import SearchForm
 
 
@@ -22,10 +22,10 @@ class CustomerForm(forms.ModelForm):
         widgets = {'email':EmailInput}
 
 
-class WorkOrderForm(forms.ModelForm):
+class JobsiteForm(forms.ModelForm):
 
     class Meta:
-        model = WorkOrder
+        model = Jobsite
         fields = [
             "customer_id",
             "jobStreet",
@@ -34,32 +34,36 @@ class WorkOrderForm(forms.ModelForm):
             "jobZip",
             "stories",
             "access",
-            "problem",
+
             "notes",
-            "assigned_to",
-            "crew_assigned",
-            "contract",
-            "completed",
+
             "latlng",
             "lat",
             "lng",
 
         ]
         widgets = {
-                   'notes': Textarea,
-                   'customer_id': HiddenInput,
-                   }
+            'notes': Textarea,
+            'customer_id': HiddenInput,
+            'latlng': HiddenInput,
+            'lat':HiddenInput,
+            'lng':HiddenInput,
+        }
 class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
         fields = [
-            "workorder_id",
+            "jobsite_id",
             "title",
             "schedule_date",
-            "time_slot"
+            "time_slot",
+            "problem",
+            "assigned_to",
+            "contract",
+            "completed",
         ]
         widgets = {
             'schedule_date':SelectDateWidget,
-            'workorder_id':HiddenInput,
+            "jobsite_id":HiddenInput,
         }

@@ -1,0 +1,54 @@
+{% extends "jobsite_detail.html" %}
+{% block addhead %}
+
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+
+{% endblock addhead %}
+
+
+  {% block appointment %}
+
+
+    <a href="{{ get_absolute_url }}appointment_update" type=button class="btn btn-primary">Edit</a>
+    <a href="{{ get_absolute_url }}appointment_delete"
+       onclick="return confirm('Are you sure want to delete this Appointment and all associated attachements, think really hard before you press OK?');"
+       type="button" class="btn btn-danger">Delete</a>
+
+            <table>
+                <tr>
+                    <td>WorkOrder#:</td>
+                    <td>{{appointment.appId}}</td>
+                    <td>Date:</td>
+                    <td>{{appointment.schedule_date}}</td>
+                </tr>
+                <tr>
+                    <td>Time Slot:</td>
+                    <td>{{appointment.time_slot}} </td>
+                    <td>Type:</td>
+                    <td>{{appointment.title}}</td>
+                </tr>
+                <tr>
+                    <td>Notes:</td>
+                    <td colspan="3">{{appointment.notes}}</td>
+                </tr>
+                <tr>
+                    <td>Created:</td>
+                    <td>{{appointment.created}}</td>
+                    <td>Modified:</td>
+                    <td>{{appointment.modified}}</td>
+                </tr>
+                <tr>
+                    <td>Modified By:</td>
+                    <td colspan="3">{{appointment.modified_by}}</td>
+                </tr>
+                <tr>
+                <td>Completed:</td>
+                <td colspan="3" >{%if obj.completed %} <span
+                                class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
+                </tr>
+
+
+            </table>
+
+{% endblock appointment %}

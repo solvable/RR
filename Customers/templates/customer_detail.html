@@ -2,147 +2,140 @@
 {% block addhead %}
 <meta name="viewport" content="initial-scale=1.0">
 <meta charset="utf-8">
-
 {% endblock addhead %}
 
 {% block content %}
 {{ block.super }}
 <div class="container">
-
-<div id='customer_info_div' class='customer_info col-sm-10'>
-    <h2>Customer Info:</h2>
-
-
-            <a href="{{ instance.get_absolute_url }}edit" class="btn btn-primary" role="button">Edit</a>
-            <a href="{{ instance.get_absolute_url }}delete"
-               onclick="return confirm('Are you sure want to delete this Customer?');"
-               class="btn btn-danger" role="button">Delete</a></br>
-    <table class="metadata_table">
-      <tr>
-        <td>Customer Id:</td>
-        <td class="td-worktable">{{instance.id}}</td>
-        <td>Source:</td>
-          <td class="td-worktable">{{instance.source}}</td>
-      </tr>
-      <tr>
-        <td>Created:</td>
-          <td class="td-worktable">{{instance.created}}</td>
-        <td>Modified:</td>
-          <td class="td-worktable">{{instance.modified}}</br></td>
-      </tr>
-      <tr>
-          <td></td>
-        <td></td>
-        <td> Modified by:</td>
-          <td class="td-worktable">{{instance.modified_by}}</td>
-      </tr>
+    <div id='customer_info_div' class='customer_info col-sm-10'>
+        <h2>Customer Info:</h2>
+        <a href="{{ instance.get_absolute_url }}edit" class="btn btn-primary" role="button">Edit</a>
+        <a href="{{ instance.get_absolute_url }}delete"
+           onclick="return confirm('Are you sure want to delete this Customer?');"
+           class="btn btn-danger" role="button">Delete</a></br>
+        <table class="metadata_table">
+            <tr>
+                <td>Customer Id:</td>
+                <td class="td-worktable">{{instance.id}}</td>
+                <td>Source:</td>
+                <td class="td-worktable">{{instance.source}}</td>
+            </tr>
+            <tr>
+                <td>Created:</td>
+                <td class="td-worktable">{{instance.created}}</td>
+                <td>Modified:</td>
+                <td class="td-worktable">{{instance.modified}}</br></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> Modified by:</td>
+                <td class="td-worktable">{{instance.modified_by}}</td>
+            </tr>
 
 
-        <tr>
-            <td>Customer Name:</td>
-            <td class="td-worktable">{{instance.fullName}}</td>
-            <td>Phone 1:</td>
-            <td class="td-worktable">{{instance.phone1}}</td>
-        </tr>
-        <tr>
-            <td >Billing Address:</td>
-            <td class="td-worktable" rowspan="2">{{instance.billStreet}}<br>{{instance.billCity}}, {{instance.billState}},{{instance.billZip}}</td>
-            <td>Phone 2:</td>
-            <td class="td-worktable">{{instance.phone2}}</td>
-        </tr>
-        <tr>
-            <td></td>
+            <tr>
+                <td>Customer Name:</td>
+                <td class="td-worktable">{{instance.fullName}}</td>
+                <td>Phone 1:</td>
+                <td class="td-worktable">{{instance.phone1}}</td>
+            </tr>
+            <tr>
+                <td>Billing Address:</td>
+                <td class="td-worktable" rowspan="2">{{instance.billStreet}}<br>{{instance.billCity}},
+                    {{instance.billState}},{{instance.billZip}}
+                </td>
+                <td>Phone 2:</td>
+                <td class="td-worktable">{{instance.phone2}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Email:</td>
+                <td class="td-worktable">{{instance.email}}</td>
+            </tr>
+        </table>
+    </div>
 
-            <td>Email:</td>
-            <td class="td-worktable">{{instance.email}}</td>
-        </tr>
-    </table>
-</div>
+    {% endblock content %}
 
-
+{% block right-pane %}
     <div id="map"></div>
     <div id="capture"></div>
     <script async defer type="text/javascript">
-      var map;
-      var lati =parseFloat("{{instance.lat}}");
-      var long = parseFloat("{{instance.lng}}");
+        var map;
+        var lati = parseFloat("{{instance.lat}}");
+        var long = parseFloat("{{instance.lng}}");
 
-      function initMap() {
+        function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: lati, lng: long},
-            zoom: 19,
-            mapTypeId:'hybrid',
-            keyboardShortcuts:false,
-        });
+                center: {lat: lati, lng: long},
+                zoom: 19,
+                mapTypeId: 'hybrid',
+                keyboardShortcuts: false,
+            });
 
 
             var marker = new google.maps.Marker({
-            animation: google.maps.Animation.BOUNCE,
-            position: {lat: lati, lng: long},
-            map: map,
-            title: "{{instance.billStreet}}"
-         });
-
-
-
-
-
+                animation: google.maps.Animation.BOUNCE,
+                position: {lat: lati, lng: long},
+                map: map,
+                title: "{{instance.billStreet}}"
+            });
         }
+
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYA6304AZ4M-qvzuIXVnEaRNYftGu_cDM&callback=initMap"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYA6304AZ4M-qvzuIXVnEaRNYftGu_cDM&callback=initMap"></script>
+{% endblock right-pane %}
 
 
-</div>
 
 
-{% block workorder-content %}
+{% block jobsite-content %}
+    <div id="jobsite_list_div" class="container-flui>
+        <h2>Jobsites:</h2>
+        <div id=" btnCreate">
+            <a href="{{ get_absolute_url }}jobsite_create" class="btn btn-success" role="button">New Job Site</a>
+        </div>
+        <div id="jobsite_info_div">
+            {% for obj in jobsite %}
+            <table class="tg">
+                <p>
+                    <tr>
+                        <td class="td-worktable">{{obj.jobStreet}}</td>
+                        <td class="td-worktable">{{obj.jobCity}},</td>
+                        <td class="td-worktable">{{obj.jobState}}</td>
+                        <td class="td-worktable">{{obj.jobZip}}</td>
+                        <td class="td-worktable">&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span
+                                class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
+                        <td>&nbsp;&nbsp;&nbsp;<a href="{{ get_absolute_url }}jobsite_detail/{{obj.jobId}}"
+                                                 class="btn btn-info" role="button">View</a></td>
+                    </tr>
+                </p>
+            </table>
+            {% endfor %}
+        </div>
+        <div>
+            <div class="pagination">
+                    <span class="step-links">
+                        {% if jobsite.has_previous %}
+                            <a href="?{{ page_request_var }}={{ workorder.previous_page_number }}">previous</a>
+                        {% endif %}
 
-<div id="workorder_list_div" class="container-fluid">
-    <h2>Work Orders:</h2>
-    <div id="btnCreate">
-        <a href="{{ get_absolute_url }}workorder_create" class="btn btn-success" role="button">New Work Order</a>
-    </div>
-    <div id="work_order_info_div">
-        {% for obj in workorder %}
+                        <span class="current">
+                            Page {{ jobsite.number }} of {{ jobsite.paginator.num_pages }}.
+                        </span>
 
-        <table class="tg">
-  <p><tr>
-    <td class="td-worktable">{{obj.jobStreet}}</td>
-    <td class="td-worktable">{{obj.jobCity}},</td>
-    <td class="td-worktable">{{obj.jobState}}</td>
-    <td class="td-worktable">{{obj.jobZip}}</td>
-    <td class="td-worktable">&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
-    <td>&nbsp;&nbsp;&nbsp;<a href="{{ get_absolute_url }}workorder_detail/{{obj.jobId}}" class="btn btn-info"
-                   role="button">View</a></td>
-
-  </tr>
-     </p>
-</table>
-
-
-        {% endfor %}
-    </div>
-    <div>
-        <div class="pagination">
-            <span class="step-links">
-                {% if workorder.has_previous %}
-                    <a href="?{{ page_request_var }}={{ workorder.previous_page_number }}">previous</a>
-                {% endif %}
-
-                <span class="current">
-                    Page {{ workorder.number }} of {{ workorder.paginator.num_pages }}.
-                </span>
-
-                {% if workorder.has_next %}
-                    <a href="?{{ page_request_var }}={{ workorder.next_page_number }}">next</a>
-                {% endif %}
-            </span>
+                        {% if jobsite.has_next %}
+                            <a href="?{{ page_request_var }}={{ workorder.next_page_number }}">next</a>
+                        {% endif %}
+                    </span>
+            </div>
         </div>
     </div>
+
+    {% endblock jobsite-content %}
+
+
+
 </div>
-
-{% endblock workorder-content %}
-{% endblock content %}
-
-
-
