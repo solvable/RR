@@ -1,18 +1,13 @@
 {% extends "customer_detail.html" %}
 {% block addhead %}
-
+{{block.super}}
 <meta name="viewport" content="initial-scale=1.0">
 <meta charset="utf-8">
 
 
 {% endblock addhead %}
 
-
-{% block jobsite-content %}
-
-<div id="jobsite_info_div" class='container col-xs-12 col-md-12'>
-    <h3>{{ jobsite_title }}</h3>
-    {% for obj in queryset %}
+{% block right-pane %}
     <script defer type="text/javascript">
         var map;
         var lati = parseFloat("{{obj.lat}}");
@@ -44,46 +39,53 @@
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYA6304AZ4M-qvzuIXVnEaRNYftGu_cDM&callback=initMap"></script>
-    <a href="{{ get_absolute_url }}jobsite_update" type=button class="btn btn-primary">Edit</a>
+{% endblock right-pane %}
+
+
+{% block jobsite-content %}
+<div id="jobsite_info_div" class='container col-xs-12 col-md-12'>
+    <h3>{{ jobsite_title }}</h3>
+ <a href="{{ get_absolute_url }}jobsite_update" type=button class="btn btn-primary">Edit</a>
     <a href="{{ get_absolute_url }}jobsite_delete"
        onclick="return confirm('Are you sure want to delete this Jobsite and all associated work orders, think really hard before you press OK?');"
        type="button" class="btn btn-danger">Delete</a>
+
+
     <table class="tg">
         <tr>
             <td>Jobsite #:</td>
-            <td colspan="3">{{obj.jobId}}</td>
+            <td colspan="3">{{jobsite.jobId}}</td>
 
         </tr>
         <tr>
             <td>Created:</td>
-            <td>{{obj.created}}</td>
+            <td>{{jobsite.created}}</td>
             <td>Modified:</td>
-            <td>{{obj.modified}}</td>
+            <td>{{jobsite.modified}}</td>
         </tr>
         <tr>
             <td>Job Address:</td>
-            <td>{{obj.jobStreet}}<br>{{obj.jobCity}}, {{obj.jobState}} {{obj.jobZip}}</td>
+            <td>{{jobsite.jobStreet}}<br>{{jobsite.jobCity}}, {{jobsite.jobState}} {{jobsite.jobZip}}</td>
             <td>Modified By:</td>
-            <td>{{obj.modified_by}}</td>
+            <td>{{jobsite.modified_by}}</td>
         </tr>
         <tr>
             <td>Access:</td>
-            <td>{{obj.access}}</td>
+            <td>{{jobsite.access}}</td>
             <td>Stories:</td>
-            <td>{{obj.stories}}</td>
+            <td>{{jobsite.stories}}</td>
         </tr>
         <tr>
             <td>Notes:</td>
-            <td colspan="3" rowspan="3">{{obj.notes}}</td>
+            <td colspan="3" rowspan="3">{{jobsite.notes}}</td>
         </tr>
 
     </table>
 
+    {% endblock jobsite-content %}
 
-    {% endfor %}
 
-
-    {%block appointment%}
+{%block appointment%}
     <a href="{{ get_absolute_url }}appointment_create" class="btn btn-success" role="button">New Appointment</a>
     <table>
         {% for obj in appointment %}
@@ -94,7 +96,6 @@
         </tr>
 
     </table>
-    {%endblock appointment%}
+{%endblock appointment%}
 
-    {% endblock jobsite-content %}
 

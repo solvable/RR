@@ -113,8 +113,8 @@ class Jobsite(models.Model):
     def __delete__(self, instance):
         return reverse("customers:customer_detail", args=[str(self.customer_id)])
 
-    def get_absolute_url(self):
-        return reverse("customers:customer_detail", args=[str(self.customer_id)])
+    def get_absolute_url(self, *args,**kwargs):
+        return reverse("customers:jobsite_detail", args=[str(self.customer_id), str(self.jobId)])
 
 
 class Appointment(models.Model):
@@ -126,7 +126,7 @@ class Appointment(models.Model):
     problem = models.CharField(max_length=200)
 
     schedule_date = models.DateField(null=True, blank=True)
-    time_slot = models.CharField(choices=TIME_SLOTS, default='', max_length=20)
+    time_slot = models.CharField(blank=True, choices=TIME_SLOTS, default='', max_length=20, null=True)
     start = models.CharField(null=True, max_length=30, blank=True)
     end = models.CharField(null=True, max_length=30, blank=True)
     appt = models.CharField(null=True, max_length=70, blank=True)
@@ -181,5 +181,6 @@ class Appointment(models.Model):
     def __delete__(self, instance):
         return reverse("customers:index")
 
-    def get_absolute_url(self):
-        return reverse("customers:index")
+    def get_absolute_url(self, kwargs):
+
+        return reverse("customers:appointment_detail", kwargs={"id":u'id, "jobId":u'self.jobsite_id,"appId":strself.appId})

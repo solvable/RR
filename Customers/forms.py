@@ -63,6 +63,7 @@ class AppointmentForm(forms.ModelForm):
             "assigned_to",
             "contract",
             "completed",
+            "notes",
         ]
         widgets = {
             'schedule_date':SelectDateWidget,

@@ -312,6 +312,7 @@ def jobsite_create(request, id=None):
         # Save instance
         instance = form.save(commit=False)
         instance.user = request.user
+
         instance.modified_by = str(request.user)
         instance.save()
         # Message success
@@ -334,14 +335,14 @@ def jobsite_detail(request, id, jobId):
 
     # set global variables
     instance=get_object_or_404(Customer,id=id)
-    queryset = instance.jobsite_set.filter(jobId=jobId)
+    jobsite = Jobsite.objects.get(jobId=jobId)
 
 
-    for i in queryset:
-        if i.appointment_set.exists():
-            appointment = (Appointment.objects.all().filter(jobsite_id = i.jobId))
-        else:
-            appointment = "None Scheduled"
+
+    if jobsite.appointment_set.exists():
+        appointment = (Appointment.objects.all().filter(jobsite_id = jobsite.jobId))
+    else:
+        appointment = "None Scheduled"
 
     # Set context variables
     context ={
@@ -349,7 +350,7 @@ def jobsite_detail(request, id, jobId):
             "instance":instance,
             "lat":instance.lat,
             "lng":instance.lng,
-            "queryset":queryset,
+            "jobsite":jobsite,
             "appointment":appointment,
             }
 
@@ -429,7 +430,6 @@ def appointment_create(request, id=None, jobId=None):
     form.fields["jobsite_id"].initial = jobId
     form.fields["jobsite_id"].disabled = True
     form.fields["title"].label = "Call Type"
-    form.fields['time_slot'].choices = sorted(TIME_SLOTS, key= lambda x: x[0])
 
 
 
@@ -461,7 +461,7 @@ def appointment_detail(request, id, jobId, appId):
 
     # set global variables
     instance = get_object_or_404(Customer, id=id)
-    queryset = instance.jobsite_set.filter(jobId=jobId)
+    jobsite = instance.jobsite_set.filter(jobId=jobId)
     appointment = Appointment.objects.all().get(appId=appId)
 
 
@@ -470,7 +470,7 @@ def appointment_detail(request, id, jobId, appId):
     context = {
         "appointment_title": "Appointment Info:",
         "instance": instance,
-        "queryset": queryset,
+        "queryset": jobsite,
         "appointment":appointment,
 
     }
@@ -484,13 +484,12 @@ def appointment_update(request, id=None, jobId=None, appId=None):
     '''
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http404
-
-    instance = get_object_or_404(Customer, id=id)
-    jobsite = Jobsite.objects.get(jobId=jobId)
-    appointment = Appointment.objects.get(appId=appId)
+    instance = get_object_or_404(Appointment, appId=appId)
+    jobId = str(jobId)
+    id = str(id)
 
     # Load appointment Form
-    form = AppointmentForm(request.POST or None, request.FILES or None, instance=appointment)
+    form = AppointmentForm(request.POST or None, request.FILES or None, instance=instance)
     # Check if form is valid
     if form.is_valid():
         # Save instance
@@ -500,10 +499,8 @@ def appointment_update(request, id=None, jobId=None, appId=None):
         # Message success
         messages.success(request, "Successfully Updated")
         # Redirect to detail view
-        id = id
-        jobId = jobId
-        appId = appId
-        return HttpResponseRedirect(appointment.get_absolute_url())
+        args = [id, jobId, appId]
+        return HttpResponseRedirect(instance.get_absolute_url(args))
 
     context = {
         "title": "Appointment Info:",
