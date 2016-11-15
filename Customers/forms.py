@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import SelectDateWidget, Textarea, EmailInput, HiddenInput
 from .models import Customer, Jobsite, Appointment
+from .choices import *
 from haystack.forms import SearchForm
 
 
@@ -67,3 +68,5 @@ class AppointmentForm(forms.ModelForm):
             'schedule_date':SelectDateWidget,
             "jobsite_id":HiddenInput,
         }
+
+

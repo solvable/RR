@@ -428,6 +428,10 @@ def appointment_create(request, id=None, jobId=None):
     form = AppointmentForm(request.POST or None, request.FILES or None)
     form.fields["jobsite_id"].initial = jobId
     form.fields["jobsite_id"].disabled = True
+    form.fields["title"].label = "Call Type"
+    form.fields['time_slot'].choices = sorted(TIME_SLOTS, key= lambda x: x[0])
+
+
 
     # Check if form is valid
     if form.is_valid():
