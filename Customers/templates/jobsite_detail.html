@@ -9,34 +9,30 @@
 {% endblock addhead %}
 
 {% block right-pane %}
-    <script defer type="text/javascript">
+    <div id="map"></div>
+    <div id="capture"></div>
+    <script async defer type="text/javascript">
         var map;
-        var lati = parseFloat("{{obj.lat}}");
-        var long = parseFloat("{{obj.lng}}");
+        var lati = parseFloat("{{jobsite.lat}}");
+        var long = parseFloat("{{jobsite.lng}}");
 
         function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: lati, lng: long},
-                zoom: 20,
+                zoom: 19,
                 mapTypeId: 'hybrid',
                 keyboardShortcuts: false,
-
-
             });
 
-            var marker = new google.maps.Marker({
 
+            var marker = new google.maps.Marker({
                 animation: google.maps.Animation.BOUNCE,
                 position: {lat: lati, lng: long},
                 map: map,
-                title: "{{obj.jobStreet}}"
-
+                title: "{{jobsite.jobStreet}}"
             });
-
-            var trafficLayer = new google.maps.TrafficLayer();
-            trafficLayer.setMap(map);
-
         }
+
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYA6304AZ4M-qvzuIXVnEaRNYftGu_cDM&callback=initMap"></script>
@@ -85,7 +81,7 @@
 {% endblock jobsite-content %}
 
 {% block appointment-content %}
-    <div class="col-md-12">
+
     <a href="{{ get_absolute_url }}appointment_create" class="btn btn-success" role="button">New Appointment</a>
 
 
@@ -102,7 +98,7 @@
                 {%endfor%}
             </table>
 
-    </div>
+    
 {% endblock appointment-content %}
 
 
