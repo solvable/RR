@@ -113,8 +113,13 @@ class Jobsite(models.Model):
     def __delete__(self, instance):
         return reverse("customers:customer_detail", args=[str(self.customer_id)])
 
-    def get_absolute_url(self, *args,**kwargs):
-        return reverse("customers:jobsite_detail", args=[str(self.customer_id), str(self.jobId)])
+    def get_absolute_url(self):
+        return reverse("customers:jobsite_detail", kwargs={"id": self.customer_id, "jobId":self.jobId})
+
+    def edit_url(self):
+        return reverse("customers:jobsite_detail", kwargs={"id":self.customer_id, "jobId":self.jobId})
+
+
 
 
 class Appointment(models.Model):
@@ -176,11 +181,14 @@ class Appointment(models.Model):
 
 
     def __str__(self):
-        return str(self.schedule_date)
+        st = str(self.schedule_date)
+        return st
 
     def __delete__(self, instance):
-        return reverse("customers:index")
+        return reverse("customers:jobsite_detail")
 
-    def get_absolute_url(self, kwargs):
+    #def get_absolute_url(self, id, jobId, appId):
+     #   return reverse("customers:appointment_detail", args=[str(id), str(jobId), str(appId)])
 
-        return reverse("customers:appointment_detail", kwargs={"id":u'id, "jobId":u'self.jobsite_id,"appId":strself.appId})
+    def get_absolute_url(self, id, jobId, appId):
+        return reverse("customers:appointment_detail", kwargs={"id": id, "jobId":jobId, "appId":appId })

@@ -1,6 +1,7 @@
 {% extends "customer_detail.html" %}
-{% block addhead %}
 {{block.super}}
+
+{% block addhead %}
 <meta name="viewport" content="initial-scale=1.0">
 <meta charset="utf-8">
 
@@ -43,9 +44,9 @@
 
 
 {% block jobsite-content %}
-<div id="jobsite_info_div" class='container col-xs-12 col-md-12'>
-    <h3>{{ jobsite_title }}</h3>
- <a href="{{ get_absolute_url }}jobsite_update" type=button class="btn btn-primary">Edit</a>
+<div class="col-md-12">
+<h3>{{ jobsite_title }}</h3>
+    <a href="{{ get_absolute_url }}jobsite_update" type=button class="btn btn-primary">Edit</a>
     <a href="{{ get_absolute_url }}jobsite_delete"
        onclick="return confirm('Are you sure want to delete this Jobsite and all associated work orders, think really hard before you press OK?');"
        type="button" class="btn btn-danger">Delete</a>
@@ -79,23 +80,30 @@
             <td>Notes:</td>
             <td colspan="3" rowspan="3">{{jobsite.notes}}</td>
         </tr>
-
     </table>
+</div>
+{% endblock jobsite-content %}
 
-    {% endblock jobsite-content %}
-
-
-{%block appointment%}
+{% block appointment-content %}
+    <div class="col-md-12">
     <a href="{{ get_absolute_url }}appointment_create" class="btn btn-success" role="button">New Appointment</a>
-    <table>
-        {% for obj in appointment %}
-        <tr>
-            <td><a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">{{obj.schedule_date}}</a></td>
-            <td>{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
-            {%endfor%}
-        </tr>
 
-    </table>
-{%endblock appointment%}
+
+            <table>
+                <thead>
+                    <th>Appointment Date</th>
+                    <th>Completed</th>
+                </thead>
+                {% for obj in appointment %}
+                <tr>
+                    <td><a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">{{obj.schedule_date}}</a></td>
+                    <td>{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
+                </tr>
+                {%endfor%}
+            </table>
+
+    </div>
+{% endblock appointment-content %}
+
 
 

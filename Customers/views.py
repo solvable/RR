@@ -310,11 +310,11 @@ def jobsite_create(request, id=None):
     # Check if form is valid
     if form.is_valid():
         # Save instance
-        instance = form.save(commit=False)
-        instance.user = request.user
+        form = form.save(commit=False)
+        form.user = request.user
 
-        instance.modified_by = str(request.user)
-        instance.save()
+        form.modified_by = str(request.user)
+        form.save()
         # Message success
         messages.success(request, "Successfully Created")
         # Redirect to detail view
@@ -334,8 +334,9 @@ def jobsite_detail(request, id, jobId):
     '''
 
     # set global variables
-    instance=get_object_or_404(Customer,id=id)
-    jobsite = Jobsite.objects.get(jobId=jobId)
+    instance = Customer.objects.get(id=id)
+    jobsite=get_object_or_404(Customer,jobId=jobId)
+
 
 
 
@@ -370,9 +371,9 @@ def jobsite_update(request, id=None, jobId=None):
     # Check if form is valid
     if form.is_valid():
         # Save instance
-        instance = form.save(commit=False)
-        instance.modified_by = str(request.user)
-        instance.save()
+        form = form.save(commit=False)
+        form.modified_by = str(request.user)
+        form.save()
         # Message success
         messages.success(request, "Successfully Updated")
         # Redirect to detail view
@@ -398,12 +399,12 @@ def jobsite_delete(request, id=None, jobId=None):
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http404
 
-
+    customer = Customer.objects.get(id = id)
     instance=get_object_or_404(Jobsite, customer_id=id, jobId=jobId)
     instance.delete()
     # Message success
     messages.success(request, "Successfully Deleted")
-    return HttpResponseRedirect(instance.get_absolute_url())
+    return HttpResponseRedirect(customer.get_absolute_url())
 
 
 def confirm_delete(request):
@@ -460,17 +461,17 @@ def appointment_detail(request, id, jobId, appId):
     '''
 
     # set global variables
-    instance = get_object_or_404(Customer, id=id)
-    jobsite = instance.jobsite_set.filter(jobId=jobId)
-    appointment = Appointment.objects.all().get(appId=appId)
-
+    instance = Customer.objects.get(id=id)
+    jobsite = Jobsite.objects.get(jobId=jobId)
+    appointment=get_object_or_404(Appointment,appId=appId)
 
 
     # Set context variables
     context = {
+        "appointment":appointment,
         "appointment_title": "Appointment Info:",
         "instance": instance,
-        "queryset": jobsite,
+        "jobsite": jobsite,
         "appointment":appointment,
 
     }
@@ -485,7 +486,7 @@ def appointment_update(request, id=None, jobId=None, appId=None):
     if not (request.user.is_staff or request.user.is_superuser):
         raise Http404
     instance = get_object_or_404(Appointment, appId=appId)
-    jobId = str(jobId)
+    jobId = jobId
     id = str(id)
 
     # Load appointment Form
@@ -499,15 +500,17 @@ def appointment_update(request, id=None, jobId=None, appId=None):
         # Message success
         messages.success(request, "Successfully Updated")
         # Redirect to detail view
-        args = [id, jobId, appId]
-        return HttpResponseRedirect(instance.get_absolute_url(args))
+        id = str(id)
+        jobId = str(jobId)
+        appId = str(appId)
+        return HttpResponseRedirect(instance.get_absolute_url(id=id, jobId=jobId, appId=appId))
 
     context = {
         "title": "Appointment Info:",
         "instance": instance,
         "form": form
     }
-    return render(request, "jobsite_form.html", context)
+    return render(request, "appointment_form.html", context)
 
 def appointment_delete(request, id=None, jobId=None, appId = None):
     """

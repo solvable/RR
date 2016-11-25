@@ -1,10 +1,12 @@
 {% extends "jobsite_detail.html" %}
 
-{% block appointment %}
+{% block appointment-content %}
+<div class="col-md-12">
 <h1>Work Order Form</h1>
 <form method="POST" action="" enctype="multipart/form">{% csrf_token %}
     <input type="hidden" name="appointment_id" value="{{ appointment_id }}">
         {{ form.as_p }}
     <input type="submit" value="Save Appointment">
 </form>
-{% endblock appointment %}
+    </div>
+{% endblock appointment-content %}

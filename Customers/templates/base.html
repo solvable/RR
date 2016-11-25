@@ -2,6 +2,10 @@
 {% load static from staticfiles %}
 <html>
     <head>
+
+        <meta name="viewport" content="initial-scale=1.0">
+        <meta charset="utf-8">
+
         <title>{% block head_title %}RR Customer DB{% endblock head_title%}</title>
 
         <!-- Optional theme -->
@@ -82,10 +86,10 @@
                 {% endblock jobsite-content %}
 
             </div>
-            <div id="workorder-content-block"></div>
-                {% block appointment %}
-                {% endblock appointment %}
-        </div>
+            <div id="appointment-content-block"></div>
+                {% block appointment-content %}
+                {% endblock appointment-content %}
+            </div>
         <p></p>
         <div id="right_pane">
 

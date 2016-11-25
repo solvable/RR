@@ -1,5 +1,7 @@
 {% extends "customer_detail.html" %}
 {% block jobsite-content %}
+
+
 <h1>Jobsite Form</h1>
 <form method="POST" action="" enctype="multipart/form">{% csrf_token %}
     <input type="hidden" name="customer_id" value="{{ customer_id }}">

@@ -157,18 +157,21 @@ td:hover{
 
 /* first-content-block */
 #first-content-block{
-    float:left;
     width:50%;
     margin-bottom:50px;
+    clear:right;
 }
 /* end first-content block */
 
 /* second-content-block */
 #second-content-block{
     float:left;
+
     width:50%;
+}
 
-
+#appointment-content-block{
+    float:left;
 }
 
 #right_pane{

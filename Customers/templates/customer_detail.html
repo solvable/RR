@@ -6,7 +6,6 @@
 {% endblock addhead %}
 
 {% block content %}
-{{ block.super }}
 <div class="container">
     <div id='customer_info_div' class='customer_info col-sm-10'>
         <h2>Customer Info:</h2>
@@ -56,8 +55,7 @@
             </tr>
         </table>
     </div>
-
-    {% endblock content %}
+{% endblock content %}
 
 {% block right-pane %}
     <div id="map"></div>
@@ -93,51 +91,45 @@
 
 
 {% block jobsite-content %}
-    <div id="jobsite-div" class="container-fluid">
-        <h2>Jobsites:</h2>
-        <div id=" btnCreate">
-            <a href="{{ get_absolute_url }}jobsite_create" class="btn btn-success" role="button">New Job Site</a>
-        </div>
-        <div id="jobsite_info_div">
-            {% for obj in jobsite %}
-            <table class="tg">
-                <p>
-                    <tr>
-                        <td>{{obj.jobStreet}}</td>
-                        <td>{{obj.jobCity}},</td>
-                        <td>{{obj.jobState}}</td>
-                        <td>{{obj.jobZip}}</td>
-                        <td>&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span
-                                class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
-                        <td>&nbsp;&nbsp;&nbsp;<a href="{{ get_absolute_url }}jobsite_detail/{{obj.jobId}}"
-                                                 class="btn btn-info" role="button">View</a></td>
-                    </tr>
-                </p>
-            </table>
-            {% endfor %}
-        </div>
-        <div>
-            <div class="pagination">
-                    <span class="step-links">
-                        {% if jobsite.has_previous %}
-                            <a href="?{{ page_request_var }}={{ workorder.previous_page_number }}">previous</a>
-                        {% endif %}
 
-                        <span class="current">
-                            Page {{ jobsite.number }} of {{ jobsite.paginator.num_pages }}.
-                        </span>
+    <h2>Jobsites:</h2>
+    <div id=" btnCreate">
+        <a href="{{ get_absolute_url }}jobsite_create" class="btn btn-success" role="button">New Job Site</a>
+    </div>
+    <div id="jobsite_info_div">
+        {% for obj in jobsite %}
+        <table class="tg">
+            <p>
+                <tr>
+                    <td>{{obj.jobStreet}}</td>
+                    <td>{{obj.jobCity}},</td>
+                    <td>{{obj.jobState}}</td>
+                    <td>{{obj.jobZip}}</td>
+                    <td>&nbsp;&nbsp;&nbsp;{%if obj.completed %} <span
+                            class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
+                    <td>&nbsp;&nbsp;&nbsp;<a href="{{ get_absolute_url }}jobsite_detail/{{obj.jobId}}"
+                                             class="btn btn-info" role="button">View</a></td>
+                </tr>
+            </p>
+        </table>
+        {% endfor %}
+    </div>
+    <div>
+        <div class="pagination">
+                <span class="step-links">
+                    {% if jobsite.has_previous %}
+                        <a href="?{{ page_request_var }}={{ workorder.previous_page_number }}">previous</a>
+                    {% endif %}
 
-                        {% if jobsite.has_next %}
-                            <a href="?{{ page_request_var }}={{ workorder.next_page_number }}">next</a>
-                        {% endif %}
+                    <span class="current">
+                        Page {{ jobsite.number }} of {{ jobsite.paginator.num_pages }}.
                     </span>
-            </div>
+
+                    {% if jobsite.has_next %}
+                        <a href="?{{ page_request_var }}={{ workorder.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
         </div>
     </div>
-
-    {% endblock jobsite-content %}
-    {% block appointment %}
-    {% endblock appointment %}
-
-
 </div>
+    {% endblock jobsite-content %}

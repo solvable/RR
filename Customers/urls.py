@@ -25,8 +25,8 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/jobsite_detail/(?P<jobId>\d+)/jobsite_delete/$', jobsite_delete, name='jobsite_delete'),
     url(r'^(?P<id>\d+)/jobsite_detail/(?P<jobId>\d+)/appointment_create/$', appointment_create, name='appointment_create'),
     url(r'^(?P<id>\d+)/jobsite_detail/(?P<jobId>\d+)/appointment_detail/(?P<appId>\d+)/$', appointment_detail, name ='appointment_detail'),
-    url(r'^(?P<id>\d+)/jobsite_detail/(?P<jobId>\d+)/appointment_detail/(?P<appId>\d+)/appointment_update$', appointment_update, name ='appointment_update'),
-    url(r'^(?P<id>\d+)/jobsite_detail/(?P<jobId>\d+)/appointment_detail/(?P<appId>\d+)/appointment_delete$', appointment_delete, name ='appointment_delete'),
+    url(r'^(?P<id>\d+)/jobsite_detail/(?P<jobId>\d+)/appointment_detail/(?P<appId>\d+)/appointment_update/$', appointment_update, name ='appointment_update'),
+    url(r'^(?P<id>\d+)/jobsite_detail/(?P<jobId>\d+)/appointment_detail/(?P<appId>\d+)/appointment_delete/$', appointment_delete, name ='appointment_delete'),
 ]
 
 

@@ -1,13 +1,12 @@
 {% extends "jobsite_detail.html" %}
 {% block addhead %}
-
+{{block.super}}
 <meta name="viewport" content="initial-scale=1.0">
 <meta charset="utf-8">
 
 {% endblock addhead %}
 
-
-  {% block appointment %}
+{% block appointment-content %}
 
     <div id= "appointment-div">
     <a href="{{ get_absolute_url }}appointment_update" type=button class="btn btn-primary">Edit</a>
@@ -51,4 +50,4 @@
 
             </table>
 </div>
-{% endblock appointment %}
+{% endblock appointment-content %}
