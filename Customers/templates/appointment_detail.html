@@ -7,8 +7,7 @@
 {% endblock addhead %}
 
 {% block appointment-content %}
-
-    <div id= "appointment-div">
+<div class="col-md-12">
     <a href="{{ get_absolute_url }}appointment_update" type=button class="btn btn-primary">Edit</a>
     <a href="{{ get_absolute_url }}appointment_delete"
        onclick="return confirm('Are you sure want to delete this Appointment and all associated attachements, think really hard before you press OK?');"

@@ -46,8 +46,8 @@
 {% block jobsite-content %}
 <div class="col-md-12">
 <h3>{{ jobsite_title }}</h3>
-    <a href="{{ get_absolute_url }}jobsite_update" type=button class="btn btn-primary">Edit</a>
-    <a href="{{ get_absolute_url }}jobsite_delete"
+    <a href="{{ jobsite.get_absolute_url }}jobsite_update" type=button class="btn btn-primary">Edit</a>
+    <a href="{{ jobsite.get_absolute_url }}jobsite_delete"
        onclick="return confirm('Are you sure want to delete this Jobsite and all associated work orders, think really hard before you press OK?');"
        type="button" class="btn btn-danger">Delete</a>
 

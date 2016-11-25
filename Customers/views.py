@@ -335,7 +335,7 @@ def jobsite_detail(request, id, jobId):
 
     # set global variables
     instance = Customer.objects.get(id=id)
-    jobsite=get_object_or_404(Customer,jobId=jobId)
+    jobsite=get_object_or_404(Jobsite,jobId=jobId)
 
 
 
@@ -366,6 +366,7 @@ def jobsite_update(request, id=None, jobId=None):
         raise Http404
 
     instance = get_object_or_404(Jobsite, customer_id=id, jobId=jobId)
+
     # Load jobsite Form
     form = JobsiteForm(request.POST or None, request.FILES or None, instance=instance)
     # Check if form is valid
