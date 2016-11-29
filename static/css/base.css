@@ -157,7 +157,7 @@ td:hover{
 
 /* first-content-block */
 #first-content-block{
-    width:50%;
+    float:left;
     margin-bottom:50px;
     clear:right;
 }
@@ -166,13 +166,13 @@ td:hover{
 /* second-content-block */
 #second-content-block{
     float:left;
-
     width:50%;
 }
 
 #appointment-content-block{
-    float:left;
+    margin-top:10px;
 }
+
 
 #right_pane{
 
