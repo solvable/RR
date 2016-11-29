@@ -20,6 +20,7 @@
 $(document).ready(function() {
     // page is now ready, initialize the calendar...
     $('#calendar').fullCalendar({
+
         weekends:true,
         defaultView:'month',
         nowIndicator:true,
@@ -42,6 +43,12 @@ $(document).ready(function() {
             {{apps}}
             {%endautoescape%}
         ]
+
+
+
+
+
+
     })
 });
 
@@ -50,3 +57,10 @@ $(document).ready(function() {
 
 
 {% endblock content %}
+
+{% block right-pane %}
+{% for i in unscheduled %}
+    {{i.title}}
+{% endfor %}
+
+{% endblock right-pane %}

@@ -129,9 +129,10 @@ class Appointment(models.Model):
         'Jobsite',
     )
     title = models.CharField(null=True, blank=True, choices=TITLES,max_length=10)
-    problem = models.CharField(max_length=200)
+    problem = models.CharField(max_length=200, null=True)
     url = models.CharField(max_length=200, default="")
     schedule_date = models.DateField(null=True, blank=True)
+    unscheduled = models.BooleanField(default=True)
     time_slot = models.CharField(blank=True, choices=TIME_SLOTS, default='', max_length=20, null=True)
     start = models.CharField(null=True, max_length=30, blank=True)
     end = models.CharField(null=True, max_length=30, blank=True)
@@ -188,8 +189,11 @@ class Appointment(models.Model):
 
         self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" + str(self.schedule_date)+"T"+str(self.end) +"', color:'" + str(self.color)+"'}")
 
+        if self.schedule_date:
+            self.unscheduled=False
 
         super(Appointment, self).save(*args, **kwargs)
+
 
     def __unicode(self):
         return str(self.schedule_date)

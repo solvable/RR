@@ -63,16 +63,16 @@ def calendar(request):
     a = str(c.formatmonth(year,month))
     apptend = ""
 
-
-
     for i in apps:
         apptend = apptend + i.appt +","
         print apptend
 
+    unscheduled = Appointment.objects.filter(unscheduled=True)
+
 
     context = {
         "calendar":a,
-
+        "unscheduled": unscheduled,
         "apps":apptend,
     }
 
