@@ -56,11 +56,8 @@ $(document).ready(function() {
 <!--{{calendar|safe}}-->
 
 
-{% endblock content %}
 
 {% block right-pane %}
-{% for i in unscheduled %}
-    {{i.title}}
-{% endfor %}
 
 {% endblock right-pane %}
+{% endblock content %}

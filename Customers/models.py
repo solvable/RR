@@ -206,8 +206,6 @@ class Appointment(models.Model):
     def __delete__(self, instance):
         return reverse("customers:jobsite_detail")
 
-    #def get_absolute_url(self, id, jobId, appId):
-     #   return reverse("customers:appointment_detail", args=[str(id), str(jobId), str(appId)])
 
     def get_absolute_url(self, id, jobId, appId):
         return reverse("customers:appointment_detail", kwargs={"id": id, "jobId":jobId, "appId":appId })

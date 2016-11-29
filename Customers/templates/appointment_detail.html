@@ -7,12 +7,15 @@
 {% endblock addhead %}
 
 {% block appointment-content %}
-<div id= "appointment-content-block" class="col-md-6">
+<div id= "appointment-info-div" class="col-md-6">
 
     <a href="{{ get_absolute_url }}appointment_update" type=button class="btn btn-primary">Edit</a>
     <a href="{{ get_absolute_url }}appointment_delete"
        onclick="return confirm('Are you sure want to delete this Appointment and all associated attachments, think really hard before you press OK?');"
        type="button" class="btn btn-danger">Delete</a>
+    {% if appointment.unscheduled%}
+    <div data-background-color="yellow">*******UNSCHEDULED*******</div>
+    {% endif %}
 
             <table>
                 <tr>

@@ -91,21 +91,25 @@
                     <th>Time Slot:</th>
                     <th>Completed</th>
                 </thead>
-                {% for obj in appointment %}
-                <tr>
-                    <td>
-                        {% if obj.schedule_date %}
-                        <a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">{{obj.schedule_date}}</a>
-                        {%else%}
-                        <a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">Unscheduled</a>
-                        {% endif %}
-                                      
-                    </td>
 
-                    <td>{{obj.time_slot}}</td>
-                    <td>{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
-                </tr>
+                    {% for obj in appointment %}
+
+                        <tr>
+                            <td>
+                                {% if obj.schedule_date %}
+                                <a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">{{obj.schedule_date}}</a>
+                                {%else%}
+                                <a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">Unscheduled</a>
+                                {% endif %}
+
+                            </td>
+
+                            <td>{{obj.time_slot}}</td>
+                            <td>{%if obj.completed %} <span class="glyphicon glyphicon-ok" aria-hidden="true">{%endif%}</td>
+                        </tr>
+
                 {%endfor%}
+
             </table>
 
     

@@ -67,7 +67,8 @@ def calendar(request):
         apptend = apptend + i.appt +","
         print apptend
 
-    unscheduled = Appointment.objects.filter(unscheduled=True)
+    unscheduled = Appointment.objects.all().filter(unscheduled=True).order_by('created')
+
 
 
     context = {
@@ -143,7 +144,7 @@ def customer_browse(request):
 
 def open_workorders(request):
 
-    queryset_list = Jobsite.objects.all().filter(completed=False).order_by('created')
+    queryset_list = Appointment.objects.all().filter(completed=False).order_by('created')
     customers = Customer.objects.all()
     paginator = Paginator(queryset_list, 25) # show 25 customers per page
     page_request_var = "page"

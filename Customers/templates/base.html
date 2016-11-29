@@ -58,6 +58,7 @@
                 <li><a href="{% url 'customers:recents' %}">Recent</a></li>
                 <li><a href="{% url 'customers:browse' %}">Browse</a></li>
                 <li><a href="{% url 'customers:calendar' %}">Calendar</a></li>
+                <li><a href="{% url 'customers:open_workorders' %}">Open Workorders</a></li>
 
                 <li><a href="#">Logout</a></li>
             </ul>
@@ -97,6 +98,8 @@
                 <div id="map-block">
                     {% block map %}
                     {% endblock map %}
+                    {% block unscheduled %}
+                    {%endblock unscheduled %}
                 </div>
             {% endblock right-pane %}
         </div>
