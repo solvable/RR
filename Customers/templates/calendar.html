@@ -20,10 +20,11 @@
 $(document).ready(function() {
     // page is now ready, initialize the calendar...
     $('#calendar').fullCalendar({
-        weekends:false,
+        weekends:true,
         defaultView:'month',
         nowIndicator:true,
         navLinks: true,
+        allDayDefault:false,
 
         header:{
             left:'title',
