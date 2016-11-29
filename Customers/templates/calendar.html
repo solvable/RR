@@ -34,12 +34,13 @@ $(document).ready(function() {
 
         businessHours:{
             dow: [1,2,3,4,5],
-            start:'6:00',
-            end:'17:00',
+            start:'0:01',
+            end:'24:00',
         },
-        events:[{% autoescape off%}
+        events:[
+            {% autoescape off%}
             {{apps}}
-    {%endautoescape%}
+            {%endautoescape%}
         ]
     })
 });

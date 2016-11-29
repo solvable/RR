@@ -136,7 +136,7 @@ class Appointment(models.Model):
     start = models.CharField(null=True, max_length=30, blank=True)
     end = models.CharField(null=True, max_length=30, blank=True)
     appt = models.CharField(null=True, max_length=70, blank=True)
-
+    color = models.CharField(null=True, max_length=20, default="red")
     assigned_to = models.CharField(choices=LEAD_ASSIGNED_CHOICES,max_length=20, blank=True, default="")
     contract = models.FileField(upload_to=upload_location, blank=True)
 
@@ -148,10 +148,10 @@ class Appointment(models.Model):
     def save(self, *args, **kwargs):
 
         if self.time_slot == t0810:
-            start = "8:00"
+            start = "08:00"
             end = "10:00"
         elif self.time_slot == t0911:
-            start = "9:00"
+            start = "09:00"
             end = "11:00"
         elif self.time_slot == t1012:
             start = "10:00"
@@ -173,8 +173,22 @@ class Appointment(models.Model):
 
         if self.appt:
             self.appt=''
+        if self.assigned_to=='':
+            self.color = 'grey'
+        elif self.assigned_to== 'Evan':
+            self.color = 'green'
+        elif self.assigned_to == 'Chalie':
+            self.color = 'blue'
+        elif self.assigned_to == 'John':
+            self.color = 'pink'
+        elif self.assigned_to == 'Barry':
+            self.color = 'purple'
+        elif self.assigned_to == 'Service':
+            self.color = 'red'
 
-        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" +"T"+str(self.end) +"',url':"+str(self.url)+ ",""'}")
+        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" + str(self.schedule_date)+"T"+str(self.end) +"', color:'" + str(self.color)+"'}")
+
+
         super(Appointment, self).save(*args, **kwargs)
 
     def __unicode(self):

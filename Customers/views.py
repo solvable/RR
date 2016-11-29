@@ -441,7 +441,6 @@ def appointment_create(request, id=None, jobId=None):
     if form.is_valid():
         # Save instance
         form = form.save(commit=False)
-        form.fields["url"] = form.get_absolute_url(id = id, jobId=jobId, appId=self.appId)
         form.user = request.user
         form.modified_by = str(request.user)
         form.save()
