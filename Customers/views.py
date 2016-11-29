@@ -1,6 +1,6 @@
 
 from django.contrib import messages
-
+import json
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.shortcuts import render, get_object_or_404, redirect, Http404
 from .models import *
@@ -61,17 +61,18 @@ def calendar(request):
     year =d.year
     c=calendar.HTMLCalendar(firstweekday=0)
     a = str(c.formatmonth(year,month))
-    apt = []
+    apptend = ""
+
+    #     start = ', '.join([str(i.start)])
+
     for i in apps:
-        apt.append(i.appt)
-    print apt
-
-
+        apptend = apptend + i.appt +","
+        print apptend
 
 
     context = {
         "calendar":a,
-        "appointments":apt,
+        "apps":apptend,
     }
 
     return render(request, "calendar.html", context)
