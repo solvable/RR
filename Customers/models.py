@@ -4,6 +4,7 @@ from django.db import models
 import geocoder
 from django.core.urlresolvers import reverse
 from .choices import *
+
 from schedule.models import Event, EventRelation, Calendar
 import datetime
 from datetime import timedelta
@@ -129,7 +130,7 @@ class Appointment(models.Model):
     )
     title = models.CharField(null=True, blank=True, choices=TITLES,max_length=10)
     problem = models.CharField(max_length=200)
-    url = models.CharField(max_length=200)
+    url = models.CharField(max_length=200, default="")
     schedule_date = models.DateField(null=True, blank=True)
     time_slot = models.CharField(blank=True, choices=TIME_SLOTS, default='', max_length=20, null=True)
     start = models.CharField(null=True, max_length=30, blank=True)
@@ -173,7 +174,7 @@ class Appointment(models.Model):
         if self.appt:
             self.appt=''
 
-        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" +"T"+str(self.end) + ",""'}")
+        self.appt = str("{title:'" + str(self.title) +"', start:'"+ str(self.schedule_date) +"T"+(self.start) +"', end:'" +"T"+str(self.end) +"',url':"+str(self.url)+ ",""'}")
         super(Appointment, self).save(*args, **kwargs)
 
     def __unicode(self):
