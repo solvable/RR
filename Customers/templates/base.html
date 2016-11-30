@@ -40,29 +40,42 @@
             {% endif %}
         </div>
 
-        <div id="sideNav" class="sideNav col-md-2">
-            <ul class="sidenav col-lg-2">
+        <nav id="sideNav" class="sideNav col-md-2">
+            <ul class="sideNav col-lg-2">
                 <li><a href="{% url 'customers:index' %}"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
                 <li><a href="/customers/search"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
                 <li><a href="{% url 'customers:customer_create' %}"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
                 <li><a href="https://www.gmail.com/"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a></li>
                 <li><a href="https://explorer.pictometry.com/login.php"> <span class="glyphicon glyphicon-plane" aria-hidden="true"></span></a></li>
             </ul>
-        </div>
+        </nav>
 
 
-        <div id="topNav" class="topNav">
-            <ul class="topNav col-md-12">
-                <li><a href="{% url 'customers:index' %}">Home</a></li>
-                <li><a href="/customers/search">Search</a></li>
-                <li><a href="{% url 'customers:recents' %}">Recent</a></li>
-                <li><a href="{% url 'customers:browse' %}">Browse</a></li>
-                <li><a href="{% url 'customers:calendar' %}">Calendar</a></li>
-                <li><a href="{% url 'customers:open_workorders' %}">Open Workorders</a></li>
 
-                <li><a href="#">Logout</a></li>
+        <nav id="main-nav" class="main-nav">
+
+            <ul id="menu-bar">
+                 <li class="active"><a href="{% url 'customers:index' %}">Home</a></li>
+                 <li><a href="#">Search</a>
+                  <ul>
+                   <li><a href="{% url 'customers:open_workorders' %}">Open Workorders</a></li>
+                   <li><a href="/customers/search">Search</a></li>
+                   <li><a href="{% url 'customers:recents' %}">Recent</a></li>
+                   <li><a href="{% url 'customers:browse' %}">Browse</a></li>
+
+                  </ul>
+                 </li>
+                 <li><a href="#">Services</a>
+                  <ul>
+                   <li><a href="#">Services Sub Menu 1</a></li>
+                   <li><a href="#">Services Sub Menu 2</a></li>
+                   <li><a href="#">Services Sub Menu 3</a></li>
+                   <li><a href="#">Services Sub Menu 4</a></li>
+                  </ul>
+                 </li>
+                 <li><a href="{% url 'customers:calendar' %}">Calendar</a></li>
+                 <li><a href="#">Logout</a></li>
             </ul>
-        </div>
 
 
         <div id="main">

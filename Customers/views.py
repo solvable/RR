@@ -150,6 +150,8 @@ def open_workorders(request):
     page_request_var = "page"
     page = request.GET.get(page_request_var)
 
+    ests = queryset_list.filter(title="Estimate")
+    servs = queryset_list.filter(title="Service")
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
@@ -163,6 +165,9 @@ def open_workorders(request):
     # Set context variables
     context = {
         "title": "Open Workrders",
+        "ests":ests,
+        "servs":servs,
+
         "object_list": queryset,
         "customers":customers,
         "page_request_var": page_request_var,
