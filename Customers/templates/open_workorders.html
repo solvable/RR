@@ -1,47 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ title }}</h1>
+<div id="container">
 
-            
-    {% for obj in ests %}
-            <div class="estimate-div">
 
+    <div class="estimate-div">
+        <h1>{{ openlead }}</h1>
+        {% for obj in ests %}
             <div class="thumbnail">
-                <!--<img src="..." alt="..."> -->
                 <div class="caption">
 
+                    <h3><a href="{{ get_absolute_url}}workorder_detail/{{obj.jobId}}">{{obj.title}}</a></h3>
+                    <strong>Created: {{obj.created|timesince }}</strong></br>
+                    <strong>Modified: {{ obj.modified|timesince }}<br/>
+                    <p><a href="{{ get_absolute_url }}workorder_detail/{{obj.jobId}}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
+                </div>
+            </div>
+        {%endfor%}
+    </div>
+
+    <div class="service-div">
+        <h1>{{openserv}}</h1>
+        {% for obj in ests %}
+            <div class="thumbnail">
+                <div class="caption">
                     <h3><a href="{{ obj.get_absolute_url}}workorder_detail/{{obj.jobId}}">{{obj.title}}</a></h3>
-                    {{job}}
                     <strong>Created: {{obj.created|timesince }}</strong></br>
                     <strong>Modified: {{ obj.modified|timesince }}<br/>
                     <p><a href="{{ obj.get_absolute_url }}workorder_detail/{{obj.jobId}}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
                 </div>
-
             </div>
-                </div>
-            {%endfor%}
-
-        {% for obj in servs %}
-            <div class="service-div">
-
-            <div class="thumbnail">
-                <!--<img src="..." alt="..."> -->
-                <div class="caption">
-
-                    <h3><a href="{{ obj.get_absolute_url}}workorder_detail/{{obj.jobId}}">{{obj.title}}</a></h3>
-                    {{job}}
-                    <strong>Created: {{obj.created|timesince }}</strong></br>
-                    <strong>Modified: {{ obj.modified|timesince }}<br/>
-                    <p><a href="{{ obj.get_absolute_url }}workorder_detail/{{obj.jobId}}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
-                </div>
+        {% endfor %}
+    </div>
 
 
-            </div>
+
 </div>
 
-    {% endfor %}
-    <div>
+
+        </div>
+
+{% endblock content %}
+{% block footer %}
+
 <div class="pagination col-md-8">
     <span class="step-links">
         {% if object_list.has_previous %}
@@ -57,6 +58,5 @@
         {% endif %}
     </span>
 </div>
-</div>
-</div>
-{% endblock content %}
+
+{% endblock footer %}}

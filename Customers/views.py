@@ -1,6 +1,5 @@
 
 from django.contrib import messages
-import json
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.shortcuts import render, get_object_or_404, redirect, Http404
 from .models import *
@@ -11,16 +10,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
-def search(request):
-    return HttpResponse(fuckoff)
-
 def index(request):
     import pyowm
     API_KEY = '0661037c3beedfccf03d405e5ed322e4'
     LOCATION_ID = 5205788
     owm=pyowm.OWM(API_KEY)
-
-
     observation = owm.weather_at_id(LOCATION_ID)
     w = observation.get_weather()
 
@@ -36,6 +30,7 @@ def index(request):
     wind_speed = wind["speed"]
 
     fc = owm.daily_forecast_at_id(LOCATION_ID, limit=5)
+
     f = fc.get_forecast()
     lst = f.get_weathers()
 
@@ -145,7 +140,9 @@ def customer_browse(request):
 def open_workorders(request):
 
     queryset_list = Appointment.objects.all().filter(completed=False).order_by('created')
-    customers = Customer.objects.all()
+    #customers = Customer.objects.all()
+    #jobsites =
+
     paginator = Paginator(queryset_list, 25) # show 25 customers per page
     page_request_var = "page"
     page = request.GET.get(page_request_var)
@@ -164,12 +161,13 @@ def open_workorders(request):
 
     # Set context variables
     context = {
-        "title": "Open Workrders",
+        "openlead": "Open Leads",
+        "openserv": "Open Service Calls",
         "ests":ests,
         "servs":servs,
 
         "object_list": queryset,
-        "customers":customers,
+        #"customers":customers,
         "page_request_var": page_request_var,
     }
     return render(request, "open_workorders.html", context)

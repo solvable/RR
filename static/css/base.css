@@ -115,6 +115,7 @@ h3{
 .estimate-div{
     float:left;
     margin-bottom:0px;
+
 }
 
 
@@ -129,6 +130,8 @@ h3{
     color:white;
 
 }
+
+
 .estimate-div .thumbnail .caption a{
     background-color:white;
     border: 1px black solid;
