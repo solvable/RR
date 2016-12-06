@@ -137,11 +137,9 @@ def customer_browse(request):
     return render(request, "customer_list.html", context)
 
 
-def open_workorders(request, id=None, jobId=None, appId=None):
+def open_workorders(request):
 
-    #queryset_list = Appointment.objects.all().filter(completed=False).order_by('created')
-    queryset_list = Appointment.objects.select_related().filter(completed=False)
-
+    queryset_list = Appointment.objects.all().filter(completed=False).order_by('created')
 
     paginator = Paginator(queryset_list, 25) # show 25 customers per page
     page_request_var = "page"

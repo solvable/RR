@@ -15,23 +15,28 @@
 {% block content %}
 
 
-<div id="calendar"></div>
+
 <script>
 $(document).ready(function() {
     // page is now ready, initialize the calendar...
     $('#calendar').fullCalendar({
 
-        weekends:true,
-        defaultView:'month',
-        nowIndicator:true,
+        weekends: true,
+        defaultView: 'month',
+        nowIndicator: true,
         navLinks: true,
-        allDayDefault:false,
+        allDayDefault: false,
 
-        header:{
-            left:'title',
-            center:'month, agendaWeek, agendaDay',
-            right:'today,prev,next'
+        header: {
+            left: 'title',
+            center: 'month, agendaWeek, agendaDay',
+            right: 'today,prev,next'
         },
+
+        selectable: true,
+        selectHelper: true,
+
+
 
         businessHours:{
             dow: [1,2,3,4,5],
@@ -53,6 +58,7 @@ $(document).ready(function() {
 });
 
 </script>
+<div id="calendar"></div>
 <!--{{calendar|safe}}-->
 
 

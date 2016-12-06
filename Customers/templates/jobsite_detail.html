@@ -97,9 +97,9 @@
                         <tr>
                             <td>
                                 {% if obj.schedule_date %}
-                                <a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">{{obj.schedule_date}}</a>
+                                <a href="{{obj.get_absolute_url}}">{{obj.schedule_date}}</a>
                                 {%else%}
-                                <a href="{{get_absolute_url}}appointment_detail/{{obj.appId}}">Unscheduled</a>
+                                <a href="{{obj.get_absolute_url}}">Unscheduled</a>
                                 {% endif %}
 
                             </td>
