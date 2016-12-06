@@ -55,6 +55,7 @@ class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = [
+            "customer_id",
             "jobsite_id",
             "title",
             "schedule_date",
@@ -68,6 +69,7 @@ class AppointmentForm(forms.ModelForm):
         widgets = {
             'schedule_date':SelectDateWidget,
             "jobsite_id":HiddenInput,
+            "customer_id":HiddenInput,
         }
 
 

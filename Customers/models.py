@@ -106,10 +106,10 @@ class Jobsite(models.Model):
 
 
     def __unicode__(self):
-        return self.jobId
+        return str(self.jobId)
 
     def __str__(self):
-        return self.jobId
+        return str(self.jobId)
 
     def __delete__(self, instance):
         return reverse("customers:customer_detail", args=[str(self.customer_id)])
@@ -124,10 +124,10 @@ class Jobsite(models.Model):
 
 
 class Appointment(models.Model):
+
     appId = models.AutoField(primary_key=True)
-    jobsite_id = models.ForeignKey(
-        'Jobsite',
-    )
+    customer_id = models.ForeignKey('Customer', default=0)
+    jobsite_id = models.ForeignKey('Jobsite')
     title = models.CharField(null=True, blank=True, choices=TITLES,max_length=10)
     problem = models.CharField(max_length=200, null=True)
     url = models.CharField(max_length=200, default="")
@@ -200,12 +200,12 @@ class Appointment(models.Model):
 
 
     def __str__(self):
-        st = str(self.schedule_date)
-        return st
+        return str(self.schedule_date)
+
 
     def __delete__(self, instance):
         return reverse("customers:jobsite_detail")
 
 
-    def get_absolute_url(self, id, jobId, appId):
-        return reverse("customers:appointment_detail", kwargs={"id": id, "jobId":jobId, "appId":appId })
+    def get_absolute_url(self):
+        return reverse("customers:appointment_detail", kwargs={"id": self.customer_id, "jobId":self.jobsite_id, "appId":self.appId})

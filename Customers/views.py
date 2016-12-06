@@ -137,11 +137,11 @@ def customer_browse(request):
     return render(request, "customer_list.html", context)
 
 
-def open_workorders(request):
+def open_workorders(request, id=None, jobId=None, appId=None):
 
-    queryset_list = Appointment.objects.all().filter(completed=False).order_by('created')
-    #customers = Customer.objects.all()
-    #jobsites =
+    #queryset_list = Appointment.objects.all().filter(completed=False).order_by('created')
+    queryset_list = Appointment.objects.select_related().filter(completed=False)
+
 
     paginator = Paginator(queryset_list, 25) # show 25 customers per page
     page_request_var = "page"
@@ -149,6 +149,7 @@ def open_workorders(request):
 
     ests = queryset_list.filter(title="Estimate")
     servs = queryset_list.filter(title="Service")
+
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
@@ -438,7 +439,8 @@ def appointment_create(request, id=None, jobId=None):
     form.fields["jobsite_id"].initial = jobId
     form.fields["jobsite_id"].disabled = True
     form.fields["title"].label = "Call Type"
-
+    form.fields["customer_id"].initial =id
+    form.fields["customer_id"].disabled=True
 
 
     # Check if form is valid
@@ -510,7 +512,7 @@ def appointment_update(request, id=None, jobId=None, appId=None):
         id = str(id)
         jobId = str(jobId)
         appId = str(appId)
-        return HttpResponseRedirect(instance.get_absolute_url(id=id, jobId=jobId, appId=appId))
+        return HttpResponseRedirect(instance.get_absolute_url())
 
     context = {
         "title": "Appointment Info:",
