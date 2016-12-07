@@ -63,95 +63,106 @@ h3{
 
 /* customer list*/
 
-.customer_list_div{
-    border:none;
-
+#customer-list-div .thumbnail {
+    width: 250px;
+    background-color: #DDDDDD;
+    text-align: center;
+    border-radius: 50px;
+    border:3px solid black;
 }
 
-.service-div .btn .btn-info{
-    background-color:black;
-
-}
-
-
-.service-div{
-    float:right;
-    background-color: transparent;
-    border: 1px transparent solid;
-
-}
-.service-div .thumbnail .caption{
-    border-radius: 25px;
-    background-color:red;
-    text-align:center;
-    width:250px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
+#customer-list-div .thumbnail .caption a{
+    border-radius: 50px;
     color:white;
 
-
 }
-.service-div .thumbnail .caption a{
-    background-color:white;
-    border: 1px black solid;
-    border-radius:10px;
+
+#customer-list-div .thumbnail .caption .customer-link{
+    background-color:navy;
+    border:solid black 1px;
+    border-radius: 50px;
     padding:5px;
-    background-color: steelblue;
     color:white;
-
-
-}
-.service-div .thumbnail .caption .btn-info{
-    background-color:steelblue;
-
 }
 
+/******end customer-list ****/
 
-
-
-
-
-.estimate-div{
+/******recents*****/
+.lead-div{
     float:left;
-    margin-bottom:0px;
 
 }
 
+.lead-div .thumbnail {
+    width: 250px;
+    background-color: green;
+    text-align: center;
+    border-radius: 50px;
+    border:3px solid black;
 
-.estimate-div .thumbnail .caption{
-    border-radius: 25px;
-    background-color:green;
-    text-align:center;
-    width:250px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
+}
+
+.lead-div .thumbnail .caption {
+    border-radius: 50px;
     color:white;
 
 }
 
+.lead-div .thumbnail .caption .info{
 
-.estimate-div .thumbnail .caption a{
-    background-color:white;
-    border: 1px black solid;
-    border-radius:10px;
+    margin:10px;
+}
+
+.lead-div .thumbnail .caption .lead-link{
+    color:white;
+    background-color:navy;
+    border:solid black 1px;
+    border-radius: 50px;
     padding:5px;
-    background-color: steelblue;
+
+}
+.lead-div .thumbnail .caption .lead-link a{
     color:white;
 }
 
-.estimate-div .thumbnail .caption .btn-info{
-    background-color:steelblue;
+/**********************/
+.service-div{
+    float:left;
+    margin:0 25 25 25px;
 
+
+}
+.service-div .thumbnail {
+
+    width: 250px;
+    background-color: red;
+    text-align: center;
+    border-radius: 50px;
+    border:3px solid black;
+}
+
+.service-div .thumbnail .caption {
+    border-radius: 50px;
+    color:white;
+
+}
+
+.service-div .thumbnail .caption .serv-link{
+    background-color:navy;
+    border:solid black 1px;
+    border-radius: 50px;
+    padding:5px;
+    color:white;
+}
+.service-div .thumbnail .caption .serv-link a{
+    color:white;
 }
 
 
 
-.customer-list-object{
-    draggable: true;
 
-}
+/***********/
+
 
 
 /* end customer list*/
@@ -421,13 +432,13 @@ td:hover{
 /* end second-content block */
 
 /* map */
-#map {
+#map  {
     position:absolute;
     top:0;
     right:0;
     display: inline-block;
-    width:380px;
-    height:400px;
+    width:300px;
+    height:300px;
     vertical-align:top;
     float:right;
     border:solid black 2px;
@@ -435,6 +446,7 @@ td:hover{
 
 }
 /* end map */
+
 
 #appointment-div{
 

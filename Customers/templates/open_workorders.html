@@ -4,15 +4,17 @@
 <div id="container">
 
 
-    <div class="estimate-div">
+    <div class="lead-div">
         <h1>{{ openlead }}</h1>
         {% for obj in ests %}
             <div class="thumbnail">
                 <div class="caption">
 
-                     <a href="{{obj.get_absolute_url }}" class="thumbnail-heading">{{obj.title}}</a></br>
+                    <h3 class="lead-link"><a href="{{obj.get_absolute_url }}" class="">{{obj.title}}</a></h3>
+                    <div class="info">
                     <strong>Created: {{obj.created|timesince }}</strong></br>
                     <strong>Modified: {{ obj.modified|timesince }}<br/>
+                    </div>
                     <a href="{{ obj.get_absolute_url }}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
                 </div>
             </div>
@@ -21,11 +23,11 @@
 
     <div class="service-div">
         <h1>{{openserv}}</h1>
-        {% for obj in ests %}
+        {% for obj in servs %}
             <div class="thumbnail">
                 <div class="caption">
 
-                    <a href="{{obj.get_absolute_url }}"class="thumbnail-heading">{{obj.title}}</a></br>
+                    <h3 class="serv-link"><a href="{{obj.get_absolute_url }}"class="thumbnail-heading">{{obj.title}}</a></h3>
                     <strong>Created: {{obj.created|timesince }}</strong></br>
                     <strong>Modified: {{ obj.modified|timesince }}<br/>
                     <a href="{{ obj.get_absolute_url }}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
