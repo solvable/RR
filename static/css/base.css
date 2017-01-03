@@ -88,80 +88,10 @@ h3{
 /******end customer-list ****/
 
 /******recents*****/
-.lead-div{
-    float:left;
-
-}
-
-.lead-div .thumbnail {
-    width: 250px;
-    background-color: green;
-    text-align: center;
-    border-radius: 50px;
-    border:3px solid black;
-
-}
-
-.lead-div .thumbnail .caption {
-    border-radius: 50px;
-    color:white;
-
-}
-
-.lead-div .thumbnail .caption .info{
-
-    margin:10px;
-}
-
-.lead-div .thumbnail .caption .lead-link{
-    color:white;
-    background-color:navy;
-    border:solid black 1px;
-    border-radius: 50px;
-    padding:5px;
-
-}
-.lead-div .thumbnail .caption .lead-link a{
-    color:white;
-}
-
-/**********************/
-.service-div{
-    float:left;
-    margin:0 25 25 25px;
 
 
-}
-.service-div .thumbnail {
+/************************/
 
-    width: 250px;
-    background-color: red;
-    text-align: center;
-    border-radius: 50px;
-    border:3px solid black;
-}
-
-.service-div .thumbnail .caption {
-    border-radius: 50px;
-    color:white;
-
-}
-
-.service-div .thumbnail .caption .serv-link{
-    background-color:navy;
-    border:solid black 1px;
-    border-radius: 50px;
-    padding:5px;
-    color:white;
-}
-.service-div .thumbnail .caption .serv-link a{
-    color:white;
-}
-
-
-
-
-/***********/
 
 
 

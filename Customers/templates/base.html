@@ -1,129 +1,146 @@
 <!--DOCTYPE html -->
 {% load static from staticfiles %}
+{% load static %}
 <html>
-    <head>
+<head>
 
-        <meta name="viewport" content="initial-scale=1.0">
-        <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
 
-        <title>{% block head_title %}RR Customer DB{% endblock head_title%}</title>
+    <title>{% block head_title %}RR Customer DB{% endblock head_title%}</title>
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
-              integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-        <link rel="stylesheet" href='{% static "css/base.css" %}'/>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link rel="stylesheet" href='{% static "css/base.css" %}'/>
 
-        <!-- Load my Javascripts Confirm Delete popup -->
-        <script src='' {% static "js/confirm.js"%}'></script>
 
-        <!-- Load JQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-              integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Load JQuery -->
+    <script src='{% static "js/main.js" %}'></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 
-        <!-- Load Font Awesome -->
-        <script src="https://use.fontawesome.com/aa28806f89.js"></script>
-     {% block addhead %}
-     {% endblock addhead %}
-    </head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-    <body>
-        <div>
-            {% if messages %}
-                <ul class="messages .alert-success">
-                    {% for message in messages %}
-                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
+    <!-- Load Font Awesome -->
+    <script src="https://use.fontawesome.com/aa28806f89.js"></script>
+    {% block addhead %}
+    {% endblock addhead %}
+</head>
 
-        <nav id="sideNav" class="sideNav col-md-2">
-            <ul class="sideNav col-lg-2">
-                <li><a href="{% url 'customers:index' %}"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-                <li><a href="/customers/search"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
-                <li><a href="{% url 'customers:customer_create' %}"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></li>
-                <li><a href="https://www.gmail.com/"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a></li>
-                <li><a href="https://explorer.pictometry.com/login.php"> <span class="glyphicon glyphicon-plane" aria-hidden="true"></span></a></li>
+<body>
+<div>
+    {% if messages %}
+    <ul class="messages .alert-success">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+            {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+<nav id="sideNav" class="sideNav col-md-2">
+    <ul class="sideNav col-lg-2">
+        <li><a href="{% url 'customers:index' %}"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+        </li>
+        <li><a href="/customers/search"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
+        <li><a href="{% url 'customers:customer_create' %}"> <span class="glyphicon glyphicon-plus"
+                                                                   aria-hidden="true"></span></a></li>
+        <li><a href="https://www.gmail.com/"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+        </li>
+        <li><a href="https://explorer.pictometry.com/login.php"> <span class="glyphicon glyphicon-plane"
+                                                                       aria-hidden="true"></span></a></li>
+    </ul>
+</nav>
+
+
+<nav id="main-nav" class="main-nav">
+
+    <ul id="menu-bar">
+        <li class="active"><a href="{% url 'customers:index' %}">Home</a></li>
+        <li><a href="#">Search</a>
+            <ul>
+                <li><a href="{% url 'customers:open_workorders' %}">Open Workorders</a></li>
+                <li><a href="/customers/search">Search</a></li>
+                <li><a href="{% url 'customers:recents' %}">Recent</a></li>
+                <li><a href="{% url 'customers:browse' %}">Browse</a></li>
+
             </ul>
-        </nav>
-
-
-
-        <nav id="main-nav" class="main-nav">
-
-            <ul id="menu-bar">
-                 <li class="active"><a href="{% url 'customers:index' %}">Home</a></li>
-                 <li><a href="#">Search</a>
-                  <ul>
-                   <li><a href="{% url 'customers:open_workorders' %}">Open Workorders</a></li>
-                   <li><a href="/customers/search">Search</a></li>
-                   <li><a href="{% url 'customers:recents' %}">Recent</a></li>
-                   <li><a href="{% url 'customers:browse' %}">Browse</a></li>
-
-                  </ul>
-                 </li>
-                 <li><a href="#">Services</a>
-                  <ul>
-                   <li><a href="#">Services Sub Menu 1</a></li>
-                   <li><a href="#">Services Sub Menu 2</a></li>
-                   <li><a href="#">Services Sub Menu 3</a></li>
-                   <li><a href="#">Services Sub Menu 4</a></li>
-                  </ul>
-                 </li>
-                 <li><a href="{% url 'customers:calendar' %}">Calendar</a></li>
-                 <li><a href="#">Logout</a></li>
+        </li>
+        <li><a href="#">Services</a>
+            <ul>
+                <li><a href="#">Services Sub Menu 1</a></li>
+                <li><a href="#">Services Sub Menu 2</a></li>
+                <li><a href="#">Services Sub Menu 3</a></li>
+                <li><a href="#">Services Sub Menu 4</a></li>
             </ul>
+        </li>
+        <li><a href="{% url 'customers:calendar' %}">Calendar</a></li>
+        <li><a href="{% url 'customers:logout' %}">Logout</a></li>
+        <li><a href="#">Account</a>
+            <ul>
+                <li><a href="{% url 'customers:get_user_profile' %}">View User Account</a></li>
+                <li><a href="#">Change Password</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
 
 
-        <div id="main">
+<div id="main">
 
-            <div id="search-content-block" class="container">
-                 {% block search %}
-                 {% endblock search %}
-            </div>
+    <div id="search-content-block" class="container">
+
+        {% block search %}
+        {% endblock search %}
+
+    </div>
 
 
+    <div id="first-content-block" class="container">
 
-            <div id="first-content-block" class="container">
+        {% block content %}
+        {% endblock content %}
 
-                {% block content %}
-                {% endblock content %}
+    </div>
 
-            </div>
+    <div id="second-content-block" class="container">
 
-            <div id = "second-content-block" class="container">
+        {% block jobsite-content %}
+        {% endblock jobsite-content %}
 
-                {% block jobsite-content %}
-                {% endblock jobsite-content %}
+    </div>
 
-            </div>
-            <div id="appointment-content-block"></div>
-                {% block appointment-content %}
-                {% endblock appointment-content %}
-            </div>
-        <p></p>
-        <div id="right_pane">
+    <div id="appointment-content-block">
 
-            {% block right-pane %}
-                <div id="map-block">
-                    {% block map %}
-                    {% endblock map %}
-                    {% block unscheduled %}
-                    {%endblock unscheduled %}
-                </div>
-            {% endblock right-pane %}
-        </div>
+        {% block appointment-content %}
+        {% endblock appointment-content %}
 
-        <div id="footer">
-            <div id="footer-content-block" class="container">
-                {% block footer %}
-                {% endblock footer %}
-            </div>
-        </div>
-    </body>
+    </div>
+
+</div>
+<p></p>
+<div id="right_pane">
+
+    {% block right-pane %}
+    <div id="map-block">
+        {% block map %}
+        {% endblock map %}
+        {% block unscheduled %}
+        {%endblock unscheduled %}
+    </div>
+    {% endblock right-pane %}
+</div>
+
+<div id="footer">
+    <div id="footer-content-block" class="container">
+        {% block footer %}
+        {% endblock footer %}
+    </div>
+</div>
+</body>
 
 </html>
 

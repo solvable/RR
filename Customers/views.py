@@ -6,10 +6,29 @@ from .models import *
 from .forms import *
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
+
+
+@login_required(login_url='customers:login')
+def get_user_profile(request):
+    user = request.user
+    username = user.username
+    email = user.email
+    first_name = user.first_name
+    last_name = user.last_name
+    context = {
+        "username":username,
+        "email":email,
+        "first_name":first_name,
+        "last_name":last_name,
+
+    }
+
+    return render(request, "user.html", context)
 
 
 
-
+@login_required(login_url='customers:login')
 def index(request):
     import pyowm
     API_KEY = '0661037c3beedfccf03d405e5ed322e4'
@@ -47,6 +66,7 @@ def index(request):
     }
     return render(request, "index.html", context)
 
+@login_required(login_url='customers:login')
 def calendar(request):
     import calendar
     apps = Appointment.objects.all()
@@ -75,6 +95,7 @@ def calendar(request):
     return render(request, "calendar.html", context)
 
 
+@login_required(login_url='customers:login')
 def recents(request):
     """
     View for customer list
@@ -108,6 +129,7 @@ def recents(request):
     return render(request, "customer_list.html", context)
 
 
+@login_required(login_url='customers:login')
 def customer_browse(request):
     """
     View for customer list
@@ -136,7 +158,7 @@ def customer_browse(request):
         }
     return render(request, "customer_list.html", context)
 
-
+@login_required(login_url='customers:login')
 def open_workorders(request):
 
     queryset_list = Appointment.objects.all().filter(completed=False).order_by('created')
@@ -147,6 +169,7 @@ def open_workorders(request):
 
     ests = queryset_list.filter(title="Estimate")
     servs = queryset_list.filter(title="Service")
+    insp = queryset_list.filter(title="Inspection")
 
     try:
         queryset = paginator.page(page)
@@ -162,15 +185,17 @@ def open_workorders(request):
     context = {
         "openlead": "Open Leads",
         "openserv": "Open Service Calls",
+        "openinsp": "Open Inspections",
         "ests":ests,
         "servs":servs,
-
+        "insp":insp,
         "object_list": queryset,
         #"customers":customers,
         "page_request_var": page_request_var,
     }
     return render(request, "open_workorders.html", context)
 
+@login_required(login_url='customers:login')
 def customer_create(request):
     '''
     View to create a Customer object
@@ -199,6 +224,7 @@ def customer_create(request):
     }
     return render(request, "customer_form.html", context)
 
+@login_required(login_url='customers:login')
 def customer_detail(request, id):
     '''
     View for Customer object details including address info and jobsites
@@ -232,7 +258,7 @@ def customer_detail(request, id):
 
     return render(request, "customer_detail.html", context)
 
-
+@login_required(login_url='customers:login')
 def customer_update(request, id=None):
     '''
     View for updating customer object
@@ -263,7 +289,7 @@ def customer_update(request, id=None):
         }
     return render(request, "customer_form.html", context)
 
-
+@login_required(login_url='customers:login')
 def customer_delete(request, id=None):
     """
     View for Deleting a Customer object
@@ -285,7 +311,7 @@ def customer_delete(request, id=None):
 
 #################### JOBSITE VIEWS ###################
 
-
+@login_required(login_url='customers:login')
 def jobsite_create(request, id=None):
     '''
     View for creating a work order Object
@@ -332,7 +358,7 @@ def jobsite_create(request, id=None):
     }
     return render(request, "jobsite_form.html", context)
 
-
+@login_required(login_url='customers:login')
 def jobsite_detail(request, id, jobId):
     '''
     View for Customer object details including address info and jobsite
@@ -362,6 +388,7 @@ def jobsite_detail(request, id, jobId):
 
     return render(request, "jobsite_detail.html", context)
 
+@login_required(login_url='customers:login')
 def jobsite_update(request, id=None, jobId=None):
 
     '''
@@ -393,7 +420,7 @@ def jobsite_update(request, id=None, jobId=None):
     return render(request, "jobsite_form.html", context)
 
 
-
+@login_required(login_url='customers:login')
 def jobsite_delete(request, id=None, jobId=None):
     """
      View for Deleting a jobsite Object
@@ -412,14 +439,14 @@ def jobsite_delete(request, id=None, jobId=None):
     messages.success(request, "Successfully Deleted")
     return HttpResponseRedirect(customer.get_absolute_url())
 
-
+@login_required(login_url='customers:login')
 def confirm_delete(request):
     jobsite_delete(request, id=None, jobId=None)
 
 
     ###############################################
 
-
+@login_required(login_url='customers:login')
 def appointment_create(request, id=None, jobId=None):
     '''
     View for creating a work order Object
@@ -462,6 +489,8 @@ def appointment_create(request, id=None, jobId=None):
     }
     return render(request, "appointment_form.html", context)
 
+
+@login_required(login_url='customers:login')
 def appointment_detail(request, id, jobId, appId):
     '''
     View for Appointment object details including address info and jobsite
@@ -485,6 +514,8 @@ def appointment_detail(request, id, jobId, appId):
 
     return render(request, "appointment_detail.html", context)
 
+
+@login_required(login_url='customers:login')
 def appointment_update(request, id=None, jobId=None, appId=None):
 
     '''
@@ -519,6 +550,7 @@ def appointment_update(request, id=None, jobId=None, appId=None):
     }
     return render(request, "appointment_form.html", context)
 
+@login_required(login_url='customers:login')
 def appointment_delete(request, id=None, jobId=None, appId = None):
     """
      View for Deleting a jobsite Object
@@ -538,5 +570,6 @@ def appointment_delete(request, id=None, jobId=None, appId = None):
     messages.success(request, "Successfully Deleted")
     return HttpResponseRedirect(jobsite.get_absolute_url())
 
+@login_required(login_url='customers:login')
 def confirm_delete(request):
     appointment_delete(request, id=None, jobId=None, appId=None)
