@@ -16,12 +16,13 @@ def get_user_profile(request):
     email = user.email
     first_name = user.first_name
     last_name = user.last_name
+    password = user.password
     context = {
         "username":username,
         "email":email,
         "first_name":first_name,
         "last_name":last_name,
-
+        "password":password,
     }
 
     return render(request, "user.html", context)
@@ -122,7 +123,7 @@ def recents(request):
 
     # Set context variables
     context = {
-            "title":"Recent Customers",
+            "title":"Customer Browse",
             "object_list": queryset,
             "page_request_var":page_request_var,
         }
@@ -183,9 +184,9 @@ def open_workorders(request):
 
     # Set context variables
     context = {
-        "openlead": "Open Leads",
-        "openserv": "Open Service Calls",
-        "openinsp": "Open Inspections",
+        "openlead": "Lead",
+        "openserv": "Service",
+        "openinsp": "Inspection",
         "ests":ests,
         "servs":servs,
         "insp":insp,

@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="lead-div">
+
+
+<div class="container col-xs-12">
+<h1 align="center">Open Workorders</h1>
+
+    <div id="lead-div" class="col-xs-4">
         <h1>{{ openlead }}</h1>
+        {% if ests%}
         {% for obj in ests %}
             <div class="thumbnail">
                 <div class="caption">
@@ -15,31 +21,41 @@
                     <a href="{{ obj.get_absolute_url }}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
                 </div>
             </div>
-                {%endfor%}
+        {%endfor%}
+
+        {% else %}
+        No Open Leads
+        {% endif %}
 
     </div>
 
 
 
-    <div class="service-div">
+    <div id="serv-div" class="col-xs-4">
         <h1>{{openserv}}</h1>
-        {% for obj in servs %}
-            <div class="thumbnail">
-                <div class="caption">
+        {% if servs %}
+            {% for obj in servs %}
+                <div class="thumbnail">
+                    <div class="caption">
 
-                    <h3 class="serv-link"><a href="{{obj.get_absolute_url }}"class="thumbnail-heading">{{obj.title}}</a></h3>
-                    <div class="info">
-                    <strong>Created: {{obj.created|timesince }}</strong></br>
-                    <strong>Modified: {{ obj.modified|timesince }}</strong><br/>
+                        <h3 class="serv-link"><a href="{{obj.get_absolute_url }}"class="thumbnail-heading">{{obj.title}}</a></h3>
+                        <div class="info">
+                        <strong>Created: {{obj.created|timesince }}</strong></br>
+                        <strong>Modified: {{ obj.modified|timesince }}</strong><br/>
+                        </div>
+                        <a href="{{ obj.get_absolute_url }}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
                     </div>
-                    <a href="{{ obj.get_absolute_url }}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+        No Open Service Calls! Good Job!
+        {% endif %}
     </div>
 
-    <div class="insp-div">
+
+    <div id="insp-div" class="col-xs-4">
         <h1>{{openinsp}}</h1>
+        {% if insp %}
         {% for obj in insp %}
             <div class="thumbnail">
                 <div class="caption">
@@ -53,19 +69,14 @@
                 </div>
             </div>
         {% endfor %}
+        {% else %}
+        No Open Inspections!
+        {% endif %}
     </div>
-
-
-
-
-
-
-
-
-
-
-
+</div>
 {% endblock content %}
+
+
 {% block footer %}
 
 <div class="pagination col-md-8">

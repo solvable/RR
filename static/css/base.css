@@ -87,7 +87,69 @@ h3{
 
 /******end customer-list ****/
 
-/******recents*****/
+
+
+/******open*****/
+
+#lead-div.col-xs-4 .thumbnail .caption{
+    background-color:green;
+    color:white;
+    width:200px;
+    border:black 1px solid;
+    border-radius:25px;
+    text-align: center;
+
+
+}
+
+#lead-div.col-xs-4 .thumbnail .caption a{
+    background-color:navy;
+    color:white;
+    border:black 1px solid;
+    border-radius:10px;
+    padding:5px;
+
+}
+
+
+
+#serv-div.col-xs-4 .thumbnail .caption{
+    background-color:red;
+    color:white;
+    width:200px;
+    border:black 1px solid;
+    border-radius:25px;
+    text-align: center;
+}
+
+#serv-div.col-xs-4 .thumbnail .caption a{
+    background-color:navy;
+    color:white;
+    border:black 1px solid;
+    border-radius:10px;
+    padding:5px;
+
+
+}
+
+
+
+#insp-div.col-xs-4 .thumbnail .caption{
+    background-color:orangered;
+    color:white;
+    width:200px;
+    border:black 1px solid;
+    border-radius:25px;
+    text-align: center;
+}
+
+#insp-div.col-xs-4 .thumbnail .caption a{
+    background-color:navy;
+    color:white;
+    border:black 1px solid;
+    border-radius:10px;
+    padding:5px;
+}
 
 
 /************************/
@@ -325,11 +387,6 @@ table tr, td{
     width:5%;
 }
 
-td:hover{
-    background-color:black;
-    color:white;
-
-}
 
 
 /* end tables */
@@ -373,6 +430,8 @@ td:hover{
     float:right;
     border:solid black 2px;
     clear:none;
+    z-index:10;
+
 
 }
 /* end map */
