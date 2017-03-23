@@ -153,8 +153,9 @@ h3{
 
 
 /************************/
-
-
+#search_div #searchForm p:nth-child(2){
+    visibility: hidden;
+}
 
 
 /* end customer list*/

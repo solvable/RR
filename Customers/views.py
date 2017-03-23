@@ -31,28 +31,31 @@ def get_user_profile(request):
 
 @login_required(login_url='customers:login')
 def index(request):
+    #Weather content
     import pyowm
     API_KEY = '0661037c3beedfccf03d405e5ed322e4'
     LOCATION_ID = 5205788
     owm=pyowm.OWM(API_KEY)
     observation = owm.weather_at_id(LOCATION_ID)
     w = observation.get_weather()
-
     status = w.get_detailed_status()
     weather_icon = w.get_weather_icon_name()
     icon = "http://openweathermap.org/img/w/"+weather_icon+".png"
-
     temp = w.get_temperature('fahrenheit')
     temp_max = temp["temp_max"]
     temp_min = temp["temp_min"]
-
     wind = w.get_wind()
     wind_speed = wind["speed"]
-
     fc = owm.daily_forecast_at_id(LOCATION_ID, limit=5)
-
     f = fc.get_forecast()
     lst = f.get_weathers()
+    #End weather content
+
+    #User assignments
+    my_open = Appointment.objects.all().filter(assigned_to =request.user.first_name)
+
+
+
 
     context = {
         "title":"Home",
@@ -63,6 +66,8 @@ def index(request):
         "temp_min":temp_min,
         "f":f,
         "lst":lst,
+        "my_open":my_open,
+
 
     }
     return render(request, "index.html", context)

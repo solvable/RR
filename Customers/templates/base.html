@@ -48,9 +48,9 @@
         <li><a href="/customers/search"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
         <li><a href="{% url 'customers:customer_create' %}"> <span class="glyphicon glyphicon-plus"
                                                                    aria-hidden="true"></span></a></li>
-        <li><a href="https://www.gmail.com/"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+        <li><a href="https://www.gmail.com/" target="_blank"> <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
         </li>
-        <li><a href="https://explorer.pictometry.com/login.php"> <span class="glyphicon glyphicon-plane"
+        <li><a href="https://explorer.pictometry.com/login.php" target="_blank"> <span class="glyphicon glyphicon-plane"
                                                                        aria-hidden="true"></span></a></li>
     </ul>
 </nav>
@@ -64,7 +64,7 @@
             <ul>
                 <li><a href="{% url 'customers:open_workorders' %}">Open Workorders</a></li>
                 <li><a href="/customers/search">Search</a></li>
-                <li><a href="{% url 'customers:recents' %}">Recent</a></li>
+                <li><a href="{% url 'customers:recents' %}">Last 24 Hours</a></li>
                 <li><a href="{% url 'customers:browse' %}">Browse</a></li>
 
             </ul>

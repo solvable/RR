@@ -3,19 +3,37 @@
 {% block addhead %}
 {% endblock addhead %}
 
+
 {% block content %}
+<h3>My Open Workorders:</h3>
+    {% if my_open %}
+        {% for obj in my_open %}
+            <div class="thumbnail">
+                <div class="caption">
+                        {{name}}
+                        <h3 class="lead-link"><a href="{{obj.get_absolute_url }}" class="">{{obj.title}}</a></h3>
+
+                        <div class="info">
+                        <strong>Created: {{obj.created|timesince }}</strong></br>
+                        <strong>Modified: {{ obj.modified|timesince }}</strong><br/>
+                        </div>
+                        <a href="{{ obj.get_absolute_url }}" class="btn btn-info" id="btnViewWorkorder" role="button">View</a></p>
+                    </div>
+                </div>
+            {%endfor%}
+    {% else %}
+    <h3>All caught up! No Open Workorders</h3>
+    {% endif %}
+
+{% endblock content %}
+
+{% block right-pane %}
 <div id="weather">
-
-
-    <h3>
+    <h3>Current Weather:</br>
         <img src="{{icon}}" id="weather_icon"><br>
         Currently: {{status|capfirst}}<br>
         Min/Max Temp: {{temp_min}}/{{temp_max}}<br>
         Wind Speed:{{wind_speed}}<br>
-
-        <!--5 day Forecast:
-        {{lst}}-->
     </h3>
 </div>
-
-{% endblock content %}
+{% endblock right-pane %}
